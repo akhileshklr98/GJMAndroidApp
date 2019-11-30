@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    tools:context=".UserActivity">
+
+    <TextView
+        android:id="@+id/TextViewNotify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#1d5380"
+        android:textSize="20sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:gravity="center" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <TextClock
+        android:id="@+id/txtTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/txtLatitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="20sp"
+        android:text="@string/txtView_lat_invisible"
+        android:textColor="#000000"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/txtLongitude"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.00"
+        android:minHeight="20sp"
+        android:text="@string/txtView_lon_invisible"
+        android:visibility="invisible"
+        android:textColor="#000000" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/punchin"
+        android:layout_width="340dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.05"
+        android:background="@color/mediumGreen"
+        android:text="@string/btn_punchIn"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/myschedules"
+        android:layout_width="340dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/btn_mySchedules"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/punchout"
+        android:layout_width="340dp"
+        android:layout_height="55dp"
+        android:layout_gravity="center"
+        android:background="@android:color/holo_red_dark"
+        android:text="@string/btn_punchOut"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>
+
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--</LinearLayout>-->

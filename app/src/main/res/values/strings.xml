@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">TestApp</string>
+    <string name="loading">Loading.....</string>
+    <string name="lbl_login">Login</string>
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login">Log In</string>
+    <string name="txtView_lat_invisible">Latitude</string>
+    <string name="txtView_lon_invisible">Longitude</string>
+    <string name="btn_punchIn">PUNCH IN</string>
+    <string name="btn_mySchedules">MY SCHEDULE</string>
+    <string name="btn_punchOut">PUNCH OUT</string>
+    <string name="hint_schedule_date">Schedule Date</string>
+    <string name="hint_schedule_list">Scheduled List</string>
+    <string name="btn_map_view">Map View</string>
+    <string name="btn_attendance">Attendance</string>
+    <string name="btn_time_card">View Time Card</string>
 </resources>
