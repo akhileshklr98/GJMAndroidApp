@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -29,8 +30,9 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText editUsername, editPassword;
-    private Button btnLogIn;
+    public Button btnLogIn;
     private ProgressDialog progressDialog;
+    public WmsDB _loginCrdentials;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,26 +45,40 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        TelephonyManager tMgr = (TelephonyManager)   this.getSystemService(Context.TELEPHONY_SERVICE);
+        /* Get Imei Number */
+        TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
         final String mPhoneNumber = tMgr.getDeviceId();
-//        Toast.makeText(getApplicationContext(),mPhoneNumber,Toast.LENGTH_LONG).show();
+        final String mobileNo = tMgr.getLine1Number();
+        Toast.makeText(getApplicationContext(),mPhoneNumber,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),mobileNo,Toast.LENGTH_LONG).show();
 
-//        //If Username is already saved
-//        _loginCrdentials = new TinyDB(LoginActivity.this);
-//        String receivedUsename = null;
-//        String receivedPassword = null;
-//        try {
-//            /*get username and password saved in shared preferences*/
-//            receivedUsename = _loginCrdentials.getString("username");
-//            receivedPassword = _loginCrdentials.getString("userpassword");
-//        } catch (Exception e) {
-//        }
-//        if ((receivedUsename != null && !receivedUsename.equals("")) && (receivedPassword != null && !receivedPassword.equals(""))) {
-//            userName.setText(receivedUsename);
-//            userPassword.setText(receivedPassword);
-////            LoginNow(receivedUsename, receivedPassword);
-//        }
+        /* Get Current Location */
+        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        boolean location = locationManager.isLocationEnabled();
+        if (location == false){
+            Toast.makeText(LoginActivity.this, "Please Turn On GPS and Try Again", Toast.LENGTH_SHORT).show();
+            finish();
+//            System.exit(0);
+        }
 
+        /* If Username is already saved */
+        _loginCrdentials = new WmsDB(LoginActivity.this);
+        String receivedUsename = null;
+        String receivedPassword = null;
+        try {
+            /*get username and password saved in shared preferences*/
+            receivedUsename = _loginCrdentials.getString("username");
+            receivedPassword = _loginCrdentials.getString("userpassword");
+        } catch (Exception e) {
+
+        }
+        if ((receivedUsename != null && !receivedUsename.equals("")) && (receivedPassword != null && !receivedPassword.equals(""))) {
+            editUsername.setText(receivedUsename);
+            editPassword.setText(receivedPassword);
+//            LoginNow(receivedUsename, receivedPassword);
+        }
+
+        /* Login Button Click */
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +86,14 @@ public class LoginActivity extends AppCompatActivity {
                         (editPassword != null && !editPassword.getText().toString().trim().equals(""))){
                     String username = editUsername.getText().toString().trim();
                     String password = editPassword.getText().toString().trim();
-                    LoginNow(username,password);
+
+                    boolean location = locationManager.isLocationEnabled();
+                    if (location == true){
+                        LoginNow(username,password);
+                    }else{
+                        Toast.makeText(LoginActivity.this, "Please Turn On GPS and Try Again", Toast.LENGTH_SHORT).show();
+                    }
+//                    LoginNow(username,password);
 
                 }else {
                     Toast.makeText(LoginActivity.this, "Username or Password Cannot Be Empty", Toast.LENGTH_LONG).show();
@@ -79,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
     public void LoginNow(final String userName, final String passWord){
 
         progressDialog.setMessage("Logging Into GJ Multiclave....");
@@ -97,9 +121,13 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             int success = jsonObject.getInt("Success");
                             if(success == 2){
+                                _loginCrdentials.putString("username", userName);
+                                _loginCrdentials.putString("userpassword", passWord);
                                 Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
                                 startActivity(intent);
                             }else if (success == 1){
+                                _loginCrdentials.putString("username", userName);
+                                _loginCrdentials.putString("userpassword", passWord);
                                 Intent intent = new Intent(LoginActivity.this,UserActivity.class);
                                 startActivity(intent);
                             }else {

@@ -8,13 +8,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class UserActivity extends AppCompatActivity {
 
+    TextView txtDate, txtTime, txtLat, txtLon;
     Button btnPunchIn,btnPunchOut,btnShowSchedules;
 
     @Override
@@ -22,9 +27,18 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        txtDate = findViewById(R.id.txtDate);
+        txtTime = findViewById(R.id.txtTime);
         btnPunchIn = findViewById(R.id.punchin);
         btnPunchOut = findViewById(R.id.punchout);
         btnShowSchedules = findViewById(R.id.myschedules);
+        txtLat = findViewById(R.id.txtLatitude);
+        txtLon = findViewById(R.id.txtLongitude);
+        Calendar c = Calendar.getInstance();
+
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = df.format(c.getTime());
+        txtDate.setText(formattedDate);
 
         btnPunchIn.setOnClickListener(new View.OnClickListener() {
             @Override
