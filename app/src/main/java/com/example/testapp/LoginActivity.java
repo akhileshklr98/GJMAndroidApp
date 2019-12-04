@@ -47,15 +47,15 @@ public class LoginActivity extends AppCompatActivity {
 
         /* Get Imei Number */
         TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        final String mPhoneNumber = tMgr.getDeviceId();
-        final String mobileNo = tMgr.getLine1Number();
-        Toast.makeText(getApplicationContext(),mPhoneNumber,Toast.LENGTH_LONG).show();
+        final String imeiNumber = tMgr.getDeviceId();
+//        final String mPhoneNumber = tMgr.getLine1Number();
+        Toast.makeText(getApplicationContext(),imeiNumber,Toast.LENGTH_LONG).show();
 //        Toast.makeText(getApplicationContext(),mobileNo,Toast.LENGTH_LONG).show();
 
         /* Get Current Location */
         final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         boolean location = locationManager.isLocationEnabled();
-        if (location == false){
+        if (!location){
             Toast.makeText(LoginActivity.this, "Please Turn On GPS and Try Again", Toast.LENGTH_SHORT).show();
             finish();
 //            System.exit(0);
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void LoginNow(final String userName, final String passWord){
 
-        progressDialog.setMessage("Logging Into GJ Multiclave....");
+        progressDialog.setMessage("Logging Into GJ Multiclave...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -123,13 +123,26 @@ public class LoginActivity extends AppCompatActivity {
                             if(success == 2){
                                 _loginCrdentials.putString("username", userName);
                                 _loginCrdentials.putString("userpassword", passWord);
-                                Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-                                startActivity(intent);
+                                try {
+                                    Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+                                    intent.putExtra("username", _loginCrdentials.getString("username"));
+                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
+                                    startActivity(intent);
+                                }catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
                             }else if (success == 1){
                                 _loginCrdentials.putString("username", userName);
                                 _loginCrdentials.putString("userpassword", passWord);
-                                Intent intent = new Intent(LoginActivity.this,UserActivity.class);
-                                startActivity(intent);
+                                try {
+                                    Intent intent = new Intent(LoginActivity.this,UserActivity.class);
+                                    intent.putExtra("username", _loginCrdentials.getString("username"));
+                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
+                                    startActivity(intent);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                             }else {
                                 String message = jsonObject.getString("Message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -143,7 +156,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.hide();
-                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+//                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"No Internet Access",Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override

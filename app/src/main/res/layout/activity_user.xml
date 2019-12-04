@@ -33,6 +33,40 @@
         android:textSize="40sp"
         android:gravity="center"/>
 
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="10dp"
+        android:layout_gravity="center_horizontal" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="80dp"
+        android:paddingEnd="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtViewLat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="80dp"
+        android:paddingEnd="10dp"
+        android:weightSum="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtViewLon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/txtLatitude"
         android:layout_width="wrap_content"
@@ -58,9 +92,9 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/punchin"
+        android:id="@+id/punchIn"
         android:layout_width="340dp"
-        android:layout_height="50dp"
+        android:layout_height="85dp"
         android:layout_gravity="center"
         android:layout_weight="0.05"
         android:background="@color/mediumGreen"
@@ -76,9 +110,9 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/myschedules"
+        android:id="@+id/mySchedules"
         android:layout_width="340dp"
-        android:layout_height="55dp"
+        android:layout_height="85dp"
         android:layout_gravity="center"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/btn_mySchedules"
@@ -93,9 +127,9 @@
         android:layout_gravity="center_horizontal" />
 
     <Button
-        android:id="@+id/punchout"
+        android:id="@+id/punchOut"
         android:layout_width="340dp"
-        android:layout_height="55dp"
+        android:layout_height="85dp"
         android:layout_gravity="center"
         android:background="@android:color/holo_red_dark"
         android:text="@string/btn_punchOut"
