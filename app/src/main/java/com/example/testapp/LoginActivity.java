@@ -1,11 +1,18 @@
 package com.example.testapp;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -32,7 +39,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editUsername, editPassword;
     public Button btnLogIn;
     private ProgressDialog progressDialog;
+    private TelephonyManager tMgr;
+    private ActionBar actionBar;
     public WmsDB _loginCrdentials;
+    private String imeiNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,21 +55,31 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
 
-        /* Get Imei Number */
-        TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        final String imeiNumber = tMgr.getDeviceId();
-//        final String mPhoneNumber = tMgr.getLine1Number();
-        Toast.makeText(getApplicationContext(),imeiNumber,Toast.LENGTH_LONG).show();
-//        Toast.makeText(getApplicationContext(),mobileNo,Toast.LENGTH_LONG).show();
-
-        /* Get Current Location */
-        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        boolean location = locationManager.isLocationEnabled();
-        if (!location){
-            Toast.makeText(LoginActivity.this, "Please Turn On GPS and Try Again", Toast.LENGTH_SHORT).show();
-            finish();
-//            System.exit(0);
+        try {
+            actionBar = getSupportActionBar();
+            actionBar.hide();
+//            actionBar.setTitle("GJ Multiclaves");
+//
+//            actionBar.setDisplayShowTitleEnabled(true);
+//            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
+//            actionBar.setBackgroundDrawable(colorDrawable);
         }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /* Get Imei Number */
+        tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{
+                        Manifest.permission.READ_PHONE_STATE
+                }, 10);
+                return;
+            }
+        }
+        imeiNumber = tMgr.getDeviceId();
+        Toast.makeText(getApplicationContext(),imeiNumber,Toast.LENGTH_LONG).show();
 
         /* If Username is already saved */
         _loginCrdentials = new WmsDB(LoginActivity.this);
@@ -70,7 +90,7 @@ public class LoginActivity extends AppCompatActivity {
             receivedUsename = _loginCrdentials.getString("username");
             receivedPassword = _loginCrdentials.getString("userpassword");
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         if ((receivedUsename != null && !receivedUsename.equals("")) && (receivedPassword != null && !receivedPassword.equals(""))) {
             editUsername.setText(receivedUsename);
@@ -87,14 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                     String username = editUsername.getText().toString().trim();
                     String password = editPassword.getText().toString().trim();
 
-                    boolean location = locationManager.isLocationEnabled();
-                    if (location == true){
-                        LoginNow(username,password);
-                    }else{
-                        Toast.makeText(LoginActivity.this, "Please Turn On GPS and Try Again", Toast.LENGTH_SHORT).show();
-                    }
-//                    LoginNow(username,password);
-
+                    LoginNow(username,password);
                 }else {
                     Toast.makeText(LoginActivity.this, "Username or Password Cannot Be Empty", Toast.LENGTH_LONG).show();
                 }
@@ -105,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void LoginNow(final String userName, final String passWord){
 
-        progressDialog.setMessage("Logging Into GJ Multiclave...");
+        progressDialog.setMessage("Logging Into GJ Multiclaves...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -157,7 +170,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.hide();
 //                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_LONG).show();
-                        Toast.makeText(getApplicationContext(),"No Internet Access",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Check Internet Connection",Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override

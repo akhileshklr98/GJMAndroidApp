@@ -15,4 +15,12 @@
     <string name="btn_map_view">Map View</string>
     <string name="btn_attendance">Attendance</string>
     <string name="btn_time_card">View Time Card</string>
+    <string name="btn_not_visit">Not Visited</string>
+    <string name="btn_exit_report">Exit &amp; Report</string>
+    <string name="btn_enter">Enter</string>
+    <string name="full_colon">:</string>
+    <string name="txtView_employee">Employee</string>
+    <string name="txtView_schedule">Schedule</string>
+    <string name="txtView_hospital">Hospital </string>
+    <string name="txtView_aff_no">Aff No </string>
 </resources>

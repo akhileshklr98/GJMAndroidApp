@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:fillViewport="false">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/checkAffiliation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Affiliation"
+            android:textSize="20dp" />
+
+        <CheckBox
+            android:id="@+id/checkTraining"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Training" />
+
+        <CheckBox
+            android:id="@+id/checkRetraining"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Retraining" />
+
+        <CheckBox
+            android:id="@+id/checkSegregation"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Segregation" />
+
+        <CheckBox
+            android:id="@+id/checkBForm"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="BForm" />
+
+        <CheckBox
+            android:id="@+id/checkOfficeWork"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Office Work" />
+
+        <CheckBox
+            android:id="@+id/checkMarketing"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Marketing" />
+
+        <CheckBox
+            android:id="@+id/checkPaymentFollowup"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Payment Followup" />
+
+        <CheckBox
+            android:id="@+id/checkMedicineCollection"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:isScrollContainer="true"
+            android:scrollbars="vertical"
+            android:text="Medicine Collection"
+            android:textSize="20dp" />
+
+        <CheckBox
+            android:id="@+id/checkVerification"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="New Verification" />
+
+        <CheckBox
+            android:id="@+id/checkReVerification"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Re-Verification" />
+
+        <CheckBox
+            android:id="@+id/checkSupply"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Supply" />
+
+        <CheckBox
+            android:id="@+id/checkSupervisor"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Supervisor Duty" />
+
+        <CheckBox
+            android:id="@+id/checkMeeting"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Meeting" />
+
+        <CheckBox
+            android:id="@+id/checkTrainingAssistant"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Training Assistant" />
+
+        <CheckBox
+            android:id="@+id/checkInchargeDuty"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20dp"
+            android:text="Incharge Duty" />
+
+    </LinearLayout>
+</ScrollView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--</LinearLayout>-->

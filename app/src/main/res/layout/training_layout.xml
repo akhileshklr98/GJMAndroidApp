@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="25sp"
+    android:padding="5dp"
+    android:fillViewport="false">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:id="@+id/popup_element1"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:text="Follow Up"
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtfollowdate"
+                android:layout_width="246dp"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="Training Date "
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/trainingdate"
+                android:layout_width="246dp"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="18dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="Start Time "
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/StartTime"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:inputType="time"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="End Time "
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/EndTime"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:inputType="time"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="NoOfAttendee"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/NoofAttendee"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="Sessions "
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/Sessions"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="Assistance"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spinnerAssistance"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:clickable="true"
+                android:gravity="left"
+                android:spinnerMode="dropdown"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:text="Remarks"
+                android:textSize="18dp" />
+
+            <TextView
+                android:layout_width="10sp"
+                android:layout_height="20sp"
+                android:text=":"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/RemarkTraining"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:textColorHint="#000000"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10px"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</ScrollView>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--</LinearLayout>-->

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:paddingBottom="15dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingTop="10dp"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:id="@+id/listItemFirstRow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.12"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="true"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/affNoTxtView"
+            android:layout_width="70sp"
+            android:layout_height="20sp"
+            android:layout_weight="0.01"
+            android:gravity="left"
+            android:text="@string/txtView_aff_no"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/affNoView"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_weight="0.80"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:inputType="number"
+            android:textColor="#000000"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listItemSecondRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:longClickable="false"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/hospitalnameTxtView"
+            android:layout_width="72sp"
+            android:layout_height="20sp"
+            android:gravity="left"
+            android:text="@string/txtView_hospital"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/hospitalnameView"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_weight="0.87"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/lblLatitude"
+            android:layout_width="70sp"
+            android:layout_height="20sp"
+            android:layout_weight="0.01"
+            android:gravity="left"
+            android:text="@string/txtView_lat_invisible"
+            android:textColor="#000000" />
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/tvLatitude"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_weight=".9"
+            android:minHeight="20sp"
+            android:textColor="#000000" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/lblLongitude"
+            android:layout_width="70sp"
+            android:layout_height="20sp"
+            android:layout_weight="0.01"
+            android:gravity="left"
+            android:text="@string/txtView_lon_invisible"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLongitude"
+            android:layout_width="wrap_content"
+            android:layout_height="20sp"
+            android:layout_weight=".9"
+            android:minHeight="20sp"
+            android:textColor="#000000" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:visibility="gone"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="60sp"
+            android:layout_height="20sp"
+            android:text="@string/txtView_schedule"
+            android:id="@+id/scheduleIDTxtView"
+            android:textColor="#000000"
+            android:gravity="left"
+            android:layout_weight="0.01" />
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/scheduleIDView"
+            android:layout_weight=".9"
+            android:textColor="#000000"
+            android:minHeight="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:visibility="gone"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="60sp"
+            android:layout_height="20sp"
+            android:text="@string/txtView_employee"
+            android:id="@+id/employeeIDTxtView"
+            android:textColor="#000000"
+            android:gravity="left"
+            android:layout_weight="0.01" />
+
+        <TextView
+            android:layout_width="10sp"
+            android:layout_height="20sp"
+            android:text="@string/full_colon"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/employeeIDView"
+            android:layout_weight=".9"
+            android:textColor="#000000"
+            android:minHeight="20sp" />
+    </LinearLayout>
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="30sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/punchIn"
+        android:layout_width="357dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/enterBtnColor"
+        android:text="@string/btn_enter"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="15sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/report"
+        android:layout_width="357dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_blue_dark"
+        android:text="@string/btn_exit_report"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="15sp"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
+        android:id="@+id/notVisited"
+        android:layout_width="357dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/btn_not_visit"
+        android:textColor="#ffffff"
+        android:textColorHint="#ffffff"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+</LinearLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent">-->
+
+<!--</LinearLayout>-->

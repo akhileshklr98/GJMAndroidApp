@@ -1,16 +1,22 @@
 package com.example.testapp;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
@@ -20,6 +26,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -35,8 +42,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,17 +53,19 @@ public class UserActivity extends AppCompatActivity {
 
     private String _userName;
     private String _password;
-    private String latitude,longitude;
+    private double latitude, longitude;
     String PunchDate;
     String PunchTime;
     String TypeOfPunch;
     String formatTime;
 
-    TextView txtView,txtDate, txtTime, txtLat, txtLon, viewLat, viewLon;
-    Button btnPunchIn,btnPunchOut,btnShowSchedules;
-//    public WmsDB _loginCrdentials;
-    Location gpsLocation,networkLocation,passiveLocation;
+    TextView txtView, txtDate, txtTime, txtLat, txtLon, viewLat, viewLon;
+    Button btnPunchIn, btnPunchOut, btnShowSchedules;
+    //    public WmsDB _loginCrdentials;
+    Location gpsLocation, networkLocation, passiveLocation;
 
+    private LocationManager locationManager;
+    private LocationListener locationListener;
     private ProgressDialog progressDialog;
     private AlertDialog.Builder alertDialog;
 
@@ -77,82 +88,92 @@ public class UserActivity extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(UserActivity.this);
-//        AlertDialog.Builder alertDialog = new AlertDialog.Builder(UserActivity.this);
 
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = df.format(c.getTime());
         txtDate.setText(formattedDate);
 
-        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.getAllProviders();
-        final ConnectivityManager connectivityManager =  (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        final ConnectivityManager connectivityManager =  (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
 //        boolean connecton = connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
+
+        try {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setTitle("Main Screen");
+
+            actionBar.setDisplayShowTitleEnabled(true);
+            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
+            actionBar.setBackgroundDrawable(colorDrawable);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             Intent intent = getIntent();
             _userName = intent.getStringExtra("username");
             _password = intent.getStringExtra("password");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        gpsLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        networkLocation = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        passiveLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-        if (gpsLocation != null){
-            double lat = gpsLocation.getLatitude();
-            double lon = gpsLocation.getLongitude();
-
-            latitude = String.valueOf(lat);
-            longitude = String.valueOf(lon);
-            Toast.makeText(getApplicationContext(),"GPS "+latitude+" "+longitude,Toast.LENGTH_SHORT).show();
-        } else if (networkLocation != null){
-            double lat = networkLocation.getLatitude();
-            double lon = networkLocation.getLongitude();
-
-            latitude = String.valueOf(lat);
-            longitude = String.valueOf(lon);
-            Toast.makeText(getApplicationContext(),"Network "+latitude+" "+longitude,Toast.LENGTH_SHORT).show();
-        } else if (passiveLocation != null){
-            double lat = passiveLocation.getLatitude();
-            double lon = passiveLocation.getLongitude();
-
-            latitude = String.valueOf(lat);
-            longitude = String.valueOf(lon);
-            Toast.makeText(getApplicationContext(),"Paasive "+latitude+" "+longitude,Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getApplicationContext(), "Can't Get Your Location", Toast.LENGTH_SHORT).show();
-        }
-//        txtView.setText(_userName);
-        viewLat.setText("Latitude : "+latitude);
-        viewLon.setText("Longitude : "+longitude);
-
         CheckPunchedInOut("","");
 
-//        Toast.makeText(getApplicationContext(), _userName, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getApplicationContext(), _password, Toast.LENGTH_SHORT).show();
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                latitude = location.getLatitude();
+                longitude = location.getLongitude();
+//                viewLat.append("Latitude : " + location.getLatitude());
+//                viewLon.append("Latitude : " + location.getLatitude());
+                viewLat.setText("Latitude : "+latitude);
+                viewLon.setText("Longitude : "+longitude);
+//                Toast.makeText(getApplicationContext(),location.getLatitude()+" "+location.getLongitude(), Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                requestPermissions(new String[]{
+//                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET
+//                }, 101);
+                return;
+            }
+        }
+        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
 
         btnPunchIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean location = locationManager.isLocationEnabled();
-                if(!location){
-                    Toast.makeText(getApplicationContext(), "Please Turn On Location", Toast.LENGTH_SHORT).show();
-                }else {
-//                    Toast.makeText(getApplicationContext(), "Punch In", Toast.LENGTH_SHORT).show();
-                    String punchType = "Punch In";
-                    String mySchedule = "";
-                    CheckPunchedInOut(punchType, mySchedule);
-                }
+                String punchType = "Punch In";
+                String mySchedule = "";
+                CheckPunchedInOut(punchType, mySchedule);
             }
         });
 
         btnShowSchedules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"My Today Schedule List",Toast.LENGTH_LONG).show();
-//                Intent intent = new Intent(UserActivity.this,ScheduleActivity.class);
-//                startActivity(intent);
+                String punchType="Punch In";
+                String MySchedule="MySchedule";
+                CheckPunchedInOut(punchType,MySchedule);
             }
         });
 
@@ -162,7 +183,6 @@ public class UserActivity extends AppCompatActivity {
                 String punchType = "Punch Out";
                 String mySchedule = "";
                 CheckPunchedInOut(punchType, mySchedule);
-//                Toast.makeText(getApplicationContext(),"Punch Out", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -240,7 +260,7 @@ public class UserActivity extends AppCompatActivity {
                                         txtView.setText("You Are Already Punched Out at " + PunchTime);
                                     }
                                     else{
-                                        txtView.setText("Todays Attendance Completed at "+ PunchTime);
+                                        txtView.setText("Today Attendance Completed at "+ PunchTime);
                                     }
                                 }
                             }
@@ -283,7 +303,7 @@ public class UserActivity extends AppCompatActivity {
                                 //complete attendance
 //                                Toast.makeText(getApplicationContext(), "5", Toast.LENGTH_LONG).show();
                                 if(PunchType!=null && !PunchType.equals("")){
-                                    Toast.makeText(getApplicationContext(), "Todays Schedule Completed!!!" , Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "Today Schedule Completed!!!" , Toast.LENGTH_SHORT).show();
                                 }
                                 else{
                                     txtView.setText("Todays Attendance Completed !!");
@@ -324,8 +344,83 @@ public class UserActivity extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
-    private void SaveWorkReport(String punchType) {
-        Toast.makeText(getApplicationContext(), punchType, Toast.LENGTH_SHORT).show();
+    private void SaveWorkReport(final String punchType) {
+//        Toast.makeText(getApplicationContext(), punchType, Toast.LENGTH_SHORT).show();
+        progressDialog.setMessage("Saving Attendance...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constant.URL_USER_PUNCH,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+//                        progressDialog.dismiss();
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            int success = jsonObject.getInt("success");
+                            if (success == 2){
+                                if (punchType.equals("Punch Out")){
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getApplicationContext(), "You Are Successfully Punched Out",Toast.LENGTH_SHORT).show();
+                                }else {
+                                    try {
+                                        Intent intent = new Intent(UserActivity.this, ScheduleActivity.class);
+                                        intent.putExtra("username",_userName);
+                                        intent.putExtra("password",_password);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(), "You Are Successfully Punched In",Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            else if (success == 1){
+                                try{
+                                    Intent intent = new Intent(UserActivity.this, UserActivity.class);
+                                    intent.putExtra("username",_userName);
+                                    intent.putExtra("password",_password);
+                                    startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), "You Are Already " + punchType,Toast.LENGTH_SHORT).show();
+                                    progressDialog.dismiss();
+                                }
+                                catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.hide();
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+//                return super.getParams();
+                Map<String, String> params = new HashMap<>();
+                params.put("GpsLatitude", viewLat.getText().toString());
+                params.put("GpsLongitude", viewLon.getText().toString());
+                params.put("UserName", _userName);
+                params.put("Password", _password);
+                params.put("PunchType", punchType);
+                params.put("Date", txtDate.getText().toString());
+                params.put("Time", txtTime.getText().toString());
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+
     }
 
 }
