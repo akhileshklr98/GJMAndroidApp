@@ -15,12 +15,12 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:gravity="center"
-        android:paddingBottom="15dp"
+        android:paddingBottom="1dp"
         android:shadowColor="#ff6cc457"
         android:shadowDy="5"
         android:shadowRadius="5"
         android:text="@string/lbl_login"
-        android:textColor="#fff"
+        android:textColor="#e84118"
         android:textSize="30sp"
         android:textStyle="bold" />
 

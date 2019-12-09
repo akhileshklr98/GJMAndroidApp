@@ -78,6 +78,7 @@ public class VisitedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visited);
 
         actionBar = getSupportActionBar();
+        progressDialog = new ProgressDialog(VisitedActivity.this);
         alertDialogBuilder = new AlertDialog.Builder(VisitedActivity.this);
         alertDialog = alertDialogBuilder.create();
 
@@ -347,13 +348,410 @@ public class VisitedActivity extends AppCompatActivity {
         return true;
     }
 
-    private void verificationPopupWindow(CompoundButton buttonView, String checkBoxString) {
+    private void verificationPopupWindow(CompoundButton buttonView, final String checkBoxString) {
+        try {
+            LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
+            View promptView = layoutInflater.inflate(R.layout.verification_layout, null);
+
+            alertDialogBuilder.setView(promptView);
+            alertDialogBuilder.setTitle("Verification Details");
+
+            txtVerificationRemarks = promptView.findViewById(R.id.txtVerificationRemarks);
+            txtToken = promptView.findViewById(R.id.txttoken);
+
+            alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    VerificationRemarks = txtVerificationRemarks.getText().toString();
+                    token = txtToken.getText().toString();
+                    SaveVerificationReason(checkBoxString);
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void SaveVerificationReason(final String checkBoxString) {
+        try {
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Saving Data...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    Constant.URL_INSERT_REASON,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response != null && !response.equals("")){
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    int success = jsonObject.getInt("success");
+                                    String message = "Reason Saved Successfully";
+                                    finish();
+                                    if (success == 1){
+                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        intent.putExtra("MyScheduleID",_myScheduleId);
+                                        intent.putExtra("username",_username);
+                                        intent.putExtra("password",_password);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+                            }
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getApplicationContext(), "Failed To Save Data! Network Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("MyScheduleID", _myScheduleId);
+                    params.put("status", "Visited");
+                    params.put("customerRemarks", VerificationRemarks);
+                    params.put("TokenNo", token);
+                    params.put("UserName", _username);
+//                    params.put("checkVerification", "10");
+                    if(checkBoxString.equals("checkVerification")){
+                        params.put("checkVerification", "7");
+                    }
+                    if(checkBoxString.equals("checkReVerification")){
+                        params.put("checkReVerification", "18");
+                    }
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void segregationPopupWindow(CompoundButton buttonView) {
+        try {
+            LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
+            View promptView = layoutInflater.inflate(R.layout.segregation_layout, null);
+
+            alertDialogBuilder.setView(promptView);
+            alertDialogBuilder.setTitle("Segregation Details");
+
+            txtSegregationRemarks = promptView.findViewById(R.id.txtSegregationRemarks);
+
+            a1 = promptView.findViewById(R.id.chkQ1Y);
+            a2 = promptView.findViewById(R.id.chkQ1N);
+            txtQ1 = promptView.findViewById(R.id.txtQ1);
+
+            b1 = promptView.findViewById(R.id.chkQ2Y);
+            b2 = promptView.findViewById(R.id.chkQ2N);
+            txtQ2 = promptView.findViewById(R.id.txtQ2);
+
+            c1 = promptView.findViewById(R.id.chkQ3Y);
+            c2 = promptView.findViewById(R.id.chkQ3N);
+            txtQ3 = promptView.findViewById(R.id.txtQ3);
+
+            d1 = promptView.findViewById(R.id.chkQ4Y);
+            d2 = promptView.findViewById(R.id.chkQ4N);
+            txtQ4 = promptView.findViewById(R.id.txtQ4);
+
+            e1 = promptView.findViewById(R.id.chkQ5Y);
+            e2 = promptView.findViewById(R.id.chkQ5N);
+            txtQ5 = promptView.findViewById(R.id.txtQ5);
+
+            f1 = promptView.findViewById(R.id.chkQ6Y);
+            f2 = promptView.findViewById(R.id.chkQ6N);
+            txtQ6 = promptView.findViewById(R.id.txtQ6);
+
+            alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if (a1.isChecked() || a2.isChecked()) {
+                        if (a1.isChecked()) {
+                            selectedRadioValueA = "0";
+                        } else if (a1.isChecked()) {
+                            selectedRadioValueA = "1";
+                        }
+                    }
+
+                    if (b1.isChecked() || b2.isChecked()) {
+                        if (b1.isChecked()) {
+                            selectedRadioValueB = "0";
+                        } else if (b2.isChecked()) {
+                            selectedRadioValueB = "1";
+                        }
+                    }
+
+                    if (c1.isChecked() || c2.isChecked()) {
+                        if (c1.isChecked()) {
+                            selectedRadioValueC = "0";
+                        } else if (c2.isChecked()) {
+                            selectedRadioValueC = "1";
+                        }
+                    }
+
+                    if (d1.isChecked() || d2.isChecked()) {
+                        if (d1.isChecked()) {
+                            selectedRadioValueD = "0";
+                        } else if (d2.isChecked()) {
+                            selectedRadioValueD = "1";
+                        }
+                    }
+
+                    if (e1.isChecked() || e2.isChecked()) {
+                        if (e1.isChecked()) {
+                            selectedRadioValueE = "0";
+                        } else if (e2.isChecked()) {
+                            selectedRadioValueE = "1";
+                        }
+                    }
+
+                    if (f1.isChecked() || f2.isChecked()) {
+                        if (f1.isChecked()) {
+                            selectedRadioValueF = "0";
+                        } else if (f2.isChecked()) {
+                            selectedRadioValueF = "1";
+                        }
+                    }
+
+                    SegregationRemarks = txtSegregationRemarks.getText().toString();
+
+                    RemarkQ1=txtQ1.getText().toString();
+                    RemarkQ2=txtQ2.getText().toString();
+                    RemarkQ3=txtQ3.getText().toString();
+                    RemarkQ4=txtQ4.getText().toString();
+                    RemarkQ5=txtQ5.getText().toString();
+                    RemarkQ6=txtQ6.getText().toString();
+
+                    SaveSegregationReason();
+                }
+            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.show();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
-    private void commonPopupWindow(CompoundButton buttonView, String checkBoxString) {
+    private void SaveSegregationReason() {
+        try {
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Saving Data...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    Constant.URL_INSERT_REASON,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response != null && !response.equals("")){
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    int success = jsonObject.getInt("success");
+                                    String message = "Reason Saved Successfully";
+                                    finish();
+                                    if (success == 1){
+                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        intent.putExtra("MyScheduleID",_myScheduleId);
+                                        intent.putExtra("username",_username);
+                                        intent.putExtra("password",_password);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+                            }
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getApplicationContext(),"Failed To Save Data! Network Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("MyScheduleID", _myScheduleId);
+                    params.put("status", "Visited");
+                    params.put("customerRemarks", SegregationRemarks);
+                    params.put("UserName", _username);
+                    params.put("checkSegregation", "4");
+
+                    params.put("chkQ1", selectedRadioValueA);
+                    params.put("chkQ2", selectedRadioValueB);
+                    params.put("chkQ3", selectedRadioValueC);
+                    params.put("chkQ4", selectedRadioValueD);
+                    params.put("chkQ5", selectedRadioValueE);
+                    params.put("chkQ6", selectedRadioValueF);
+
+                    params.put("txtQ1", RemarkQ1);
+                    params.put("txtQ2", RemarkQ2);
+                    params.put("txtQ3", RemarkQ3);
+                    params.put("txtQ4", RemarkQ4);
+                    params.put("txtQ5", RemarkQ5);
+                    params.put("txtQ6", RemarkQ6);
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    private void commonPopupWindow(CompoundButton buttonView, final String checkBoxString) {
+        LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
+        View promptView = layoutInflater.inflate(R.layout.commonreason_layout, null);
+
+        alertDialogBuilder.setView(promptView);
+        alertDialogBuilder.setTitle("Reason");
+
+        txtCommonRemarks = promptView.findViewById(R.id.txtCommonRemarks);
+
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                CommonRemarks = txtCommonRemarks.getText().toString();
+                SaveCommonReason(checkBoxString);
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+    }
+
+    private void SaveCommonReason(final String checkBoxString) {
+        try {
+            progressDialog.setCancelable(false);
+            progressDialog.setMessage("Saving Data...");
+            progressDialog.setIndeterminate(true);
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                    Constant.URL_INSERT_REASON,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            if (response != null && !response.equals("")){
+                                try {
+                                    JSONObject jsonObject = new JSONObject(response);
+                                    int success = jsonObject.getInt("success");
+                                    String message = "Reason Saved Successfully";
+                                    finish();
+                                    if (success == 1){
+                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        intent.putExtra("MyScheduleID",_myScheduleId);
+                                        intent.putExtra("username",_username);
+                                        intent.putExtra("password",_password);
+                                        startActivity(intent);
+                                        Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
+                                    }
+                                }catch (JSONException e){
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (progressDialog.isShowing()) {
+                                progressDialog.dismiss();
+                            }
+                            Toast.makeText(getApplicationContext(), "Failed To Save Data! Network Error", Toast.LENGTH_SHORT).show();
+                        }
+                    }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<>();
+                    params.put("MyScheduleID", _myScheduleId);
+                    params.put("status", "Visited");
+                    params.put("customerRemarks", CommonRemarks);
+                    params.put("UserName", _username);
+
+                    if(checkBoxString.equals("checkBForm")){
+                        params.put("checkBForm", "6");
+                    }
+
+                    if(checkBoxString.equals("checkOfficeWork")){
+                        params.put("checkOfficeWork", "10");
+                    }
+
+                    if(checkBoxString.equals("checkMarketing")){
+                        params.put("checkMarketing", "11");
+                    }
+
+                    if(checkBoxString.equals("checkPaymentFollowup")){
+                        params.put("checkPaymentFollowup", "8");
+                    }
+
+                    if(checkBoxString.equals("checkMedicineCollection")){
+                        params.put("checkMedicineCollection", "5");
+                    }
+
+                    if(checkBoxString.equals("checkSupply")){
+                        params.put("checkSupply", "12");
+                    }
+
+                    if(checkBoxString.equals("checkSupervisor")){
+                        params.put("checkSupervisor", "13");
+                    }
+
+                    if(checkBoxString.equals("checkMeeting")){
+                        params.put("checkMeeting", "14");
+                    }
+
+                    if(checkBoxString.equals("checkTrainingAssistant")){
+                        params.put("checkTrainingAssistant", "15");
+                    }
+
+                    if(checkBoxString.equals("checkInChargeDuty")){
+                        params.put("checkInchargeDuty", "16");
+                    }
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(stringRequest);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void trainingPopupWindow(CompoundButton buttonView, final String checkBoxString) {
@@ -451,7 +849,77 @@ public class VisitedActivity extends AppCompatActivity {
         }
     }
 
-    private void SaveTrainingReason(String checkBoxString) {
+    private void SaveTrainingReason(final String checkBoxString) {
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Saving Data...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constant.URL_INSERT_REASON,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response != null && !response.equals("")){
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                int success = jsonObject.getInt("success");
+                                finish();
+                                if (success == 1){
+                                    Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                    intent.putExtra("MyScheduleID",_myScheduleId);
+                                    intent.putExtra("username",_username);
+                                    intent.putExtra("password",_password);
+                                    startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), "Reason Saved Successfully",Toast.LENGTH_SHORT).show();
+                                }
+                            }catch (JSONException e){
+                                e.printStackTrace();
+                            }
+                        }
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
+                        Toast.makeText(getApplicationContext(), "Failed To Save Data! Network Error", Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("MyScheduleID", _myScheduleId);
+                params.put("status", "Visited");
+                params.put("UserName", _username);
+                params.put("FollowDate",dateUP);
+                params.put("txtTrainingDate",trainingUP);
+
+                params.put("txtStartTime", StartTime);
+                params.put("txtFinishTime", EndTime);
+                params.put("txtSessions", NoOfAttendance);
+                params.put("txtAttendee", Sessions);
+                params.put("txtAssistance", spinnerAssistance);
+                params.put("txtTrainingRemark", remarkTraining);
+
+                if(checkBoxString.equals("checkTraining")){
+                    params.put("checkTraining", "2");
+                }
+
+                if(checkBoxString.equals("checkRetraining")){
+                    params.put("checkRetraining", "3");
+                }
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void LoadAssistanceList() {

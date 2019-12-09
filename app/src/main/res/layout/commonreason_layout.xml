@@ -15,34 +15,22 @@
         android:weightSum="1">
 
         <TextView
-            android:layout_width="10sp"
-            android:layout_height="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/remarksTextView"
-            android:layout_width="60sp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.16"
+            android:id="@+id/txtRemarksText"
+            android:layout_width="105dp"
+            android:layout_height="match_parent"
             android:gravity="start"
             android:text="@string/txtView_remark"
             android:textColor="#000000"
             android:textSize="21sp" />
 
-<!--        <TextView-->
-<!--            android:layout_width="10sp"-->
-<!--            android:layout_height="20sp"-->
-<!--            android:text=":"-->
-<!--            android:textStyle="bold" />-->
-
         <EditText
-            android:id="@+id/remarksTextViewTxt"
-            android:layout_width="wrap_content"
+            android:id="@+id/txtCommonRemarks"
+            android:layout_width="match_parent"
             android:layout_height="53dp"
-            android:layout_weight="0.76"
             android:minHeight="20sp"
             android:textColor="#000000"
             android:textSize="21sp" />
+
     </LinearLayout>
 
 </LinearLayout>

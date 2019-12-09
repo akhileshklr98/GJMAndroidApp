@@ -15,57 +15,57 @@
             android:id="@+id/checkAffiliation"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="Affiliation"
-            android:textSize="20dp" />
+            android:text="@string/checkbox_affiliation"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/checkTraining"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Training" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_training" />
 
         <CheckBox
             android:id="@+id/checkRetraining"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Retraining" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_retraining" />
 
         <CheckBox
             android:id="@+id/checkSegregation"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Segregation" />
+            android:textSize="20sp"
+            android:text="@string/txtView_segregation" />
 
         <CheckBox
             android:id="@+id/checkBForm"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="BForm" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_bForm" />
 
         <CheckBox
             android:id="@+id/checkOfficeWork"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Office Work" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_office_work" />
 
         <CheckBox
             android:id="@+id/checkMarketing"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Marketing" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_marketing" />
 
         <CheckBox
             android:id="@+id/checkPaymentFollowup"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Payment Followup" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_payment_followup" />
 
         <CheckBox
             android:id="@+id/checkMedicineCollection"
@@ -73,57 +73,57 @@
             android:layout_height="48dp"
             android:isScrollContainer="true"
             android:scrollbars="vertical"
-            android:text="Medicine Collection"
-            android:textSize="20dp" />
+            android:text="@string/checkbox_medicine_collection"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/checkVerification"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="New Verification" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_new_verification" />
 
         <CheckBox
             android:id="@+id/checkReVerification"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Re-Verification" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_re_verification" />
 
         <CheckBox
             android:id="@+id/checkSupply"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Supply" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_supply" />
 
         <CheckBox
             android:id="@+id/checkSupervisor"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Supervisor Duty" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_supervisor_duty" />
 
         <CheckBox
             android:id="@+id/checkMeeting"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Meeting" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_meeting" />
 
         <CheckBox
             android:id="@+id/checkTrainingAssistant"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Training Assistant" />
+            android:textSize="20sp"
+            android:text="@string/checkbox_training_assistant" />
 
         <CheckBox
             android:id="@+id/checkInchargeDuty"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:textSize="20dp"
-            android:text="Incharge Duty" />
+            android:textSize="20sp"
+            android:text="" />
 
     </LinearLayout>
 </ScrollView>

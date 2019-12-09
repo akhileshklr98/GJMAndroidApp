@@ -135,12 +135,12 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void onStatusChanged(String provider, int status, Bundle extras) {
-
+                Log.d("Location", "Status Changed");
             }
 
             @Override
             public void onProviderEnabled(String provider) {
-
+                Log.d("Location", "Enabled");
             }
 
             @Override
@@ -164,7 +164,11 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String punchType = "Punch In";
                 String mySchedule = "";
-                CheckPunchedInOut(punchType, mySchedule);
+                if (locationManager.isProviderEnabled("gps")){
+                    CheckPunchedInOut(punchType, mySchedule);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -172,8 +176,12 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String punchType="Punch In";
-                String MySchedule="MySchedule";
-                CheckPunchedInOut(punchType,MySchedule);
+                String mySchedule="MySchedule";
+                if (locationManager.isProviderEnabled("gps")){
+                    CheckPunchedInOut(punchType, mySchedule);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -182,7 +190,11 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String punchType = "Punch Out";
                 String mySchedule = "";
-                CheckPunchedInOut(punchType, mySchedule);
+                if (locationManager.isProviderEnabled("gps")){
+                    CheckPunchedInOut(punchType, mySchedule);
+                }else {
+                    Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
