@@ -1,6 +1,5 @@
 package com.example.testapp;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,9 +8,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -79,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
         imeiNumber = tMgr.getDeviceId();
-        Toast.makeText(getApplicationContext(),imeiNumber,Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(),imeiNumber,Toast.LENGTH_LONG).show();
 
         /* If Username is already saved */
         _loginCrdentials = new WmsDB(LoginActivity.this);
@@ -117,8 +113,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void LoginNow(final String userName, final String passWord){
-
-        progressDialog.setMessage("Logging Into GJ Multiclaves...");
+        progressDialog.setMessage("Logging Into GJ Multiclave...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -137,10 +132,11 @@ public class LoginActivity extends AppCompatActivity {
                                 _loginCrdentials.putString("username", userName);
                                 _loginCrdentials.putString("userpassword", passWord);
                                 try {
-                                    Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
-                                    intent.putExtra("username", _loginCrdentials.getString("username"));
-                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
-                                    startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), "Admin", Toast.LENGTH_SHORT).show();
+//                                    Intent intent = new Intent(LoginActivity.this,AdminActivity.class);
+//                                    intent.putExtra("username", _loginCrdentials.getString("username"));
+//                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
+//                                    startActivity(intent);
                                 }catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -179,6 +175,7 @@ public class LoginActivity extends AppCompatActivity {
                 Map<String,String> params = new HashMap<>();
                 params.put("username", userName);
                 params.put("password", passWord);
+                params.put("IMEINumber", imeiNumber);
                 return params;
             }
         };

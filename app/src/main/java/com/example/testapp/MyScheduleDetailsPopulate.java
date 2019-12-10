@@ -1,13 +1,7 @@
 package com.example.testapp;
 
 public class MyScheduleDetailsPopulate {
-    public String AffNo;
-    public String hospotalName;
-    public String purpose;
-    public String scheduleType;
-    public String status;
-    public String myScheduleID;
-
+    public String AffNo, hospotalName, purpose, scheduleType, status, myScheduleID;
 
     public MyScheduleDetailsPopulate() {
         super();

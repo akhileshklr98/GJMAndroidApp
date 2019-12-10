@@ -91,12 +91,8 @@ public class ScheduleActivity extends AppCompatActivity {
                 }
             }
         });
-//        this._progressDialog = new ProgressDialog(ScheduleActivity.this);
-//        this._progressDialog.setCancelable(false);
-//        this._progressDialog.setMessage("Loading Scheduled Hospital List...");
-//        this._progressDialog.setIndeterminate(true);
-//        this._progressDialog.setCanceledOnTouchOutside(false);
-        //Load details
+
+        /* Load details */
         LoadMyScheduleList();
         this._adapter.notifyDataSetChanged();
     }
@@ -164,11 +160,6 @@ public class ScheduleActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-    }
-
-    public void CheckGpsStatus(){
-        LocationManager lm= (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-        GpsStatus = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     @Override

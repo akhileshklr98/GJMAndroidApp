@@ -12,15 +12,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.telephony.TelephonyManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,7 +23,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,10 +36,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -57,12 +49,9 @@ public class UserActivity extends AppCompatActivity {
     String PunchDate;
     String PunchTime;
     String TypeOfPunch;
-    String formatTime;
 
     TextView txtView, txtDate, txtTime, txtLat, txtLon, viewLat, viewLon;
     Button btnPunchIn, btnPunchOut, btnShowSchedules;
-    //    public WmsDB _loginCrdentials;
-    Location gpsLocation, networkLocation, passiveLocation;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -96,8 +85,6 @@ public class UserActivity extends AppCompatActivity {
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.getAllProviders();
-//        final ConnectivityManager connectivityManager =  (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        boolean connecton = connectivityManager.getActiveNetworkInfo().isConnectedOrConnecting();
 
         try {
             ActionBar actionBar = getSupportActionBar();
@@ -119,6 +106,7 @@ public class UserActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        /* Check Punch in or Out */
         CheckPunchedInOut("","");
 
         locationListener = new LocationListener() {
@@ -126,8 +114,6 @@ public class UserActivity extends AppCompatActivity {
             public void onLocationChanged(Location location) {
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
-//                viewLat.append("Latitude : " + location.getLatitude());
-//                viewLon.append("Latitude : " + location.getLatitude());
                 viewLat.setText("Latitude : "+latitude);
                 viewLon.setText("Longitude : "+longitude);
 //                Toast.makeText(getApplicationContext(),location.getLatitude()+" "+location.getLongitude(), Toast.LENGTH_LONG).show();
@@ -140,7 +126,7 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void onProviderEnabled(String provider) {
-                Log.d("Location", "Enabled");
+//                Log.d("Location", "Enabled");
             }
 
             @Override
@@ -159,19 +145,26 @@ public class UserActivity extends AppCompatActivity {
         }
         locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
 
+        /* Click Punch In Button */
         btnPunchIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String punchType = "Punch In";
                 String mySchedule = "";
                 if (locationManager.isProviderEnabled("gps")){
-                    CheckPunchedInOut(punchType, mySchedule);
+                    if (txtLat.getText().toString().equals("") && txtLon.getText().toString().equals("") &&
+                            txtLat.getText().toString() == "" && txtLon.getText().toString() == ""){
+                        Toast.makeText(getApplicationContext(), "Please Wait...", Toast.LENGTH_SHORT).show();
+                    }else {
+                        CheckPunchedInOut(punchType, mySchedule);
+                    }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+        /* Click Schedule Button */
         btnShowSchedules.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -185,13 +178,20 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
+        /* Click Punch Out Button */
         btnPunchOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String punchType = "Punch Out";
                 String mySchedule = "";
                 if (locationManager.isProviderEnabled("gps")){
-                    CheckPunchedInOut(punchType, mySchedule);
+//                    CheckPunchedInOut(punchType, mySchedule);
+                    if (txtLat.getText().toString().equals("") && txtLon.getText().toString().equals("") &&
+                            txtLat.getText().toString() == "" && txtLon.getText().toString() == ""){
+                        Toast.makeText(getApplicationContext(), "Please Wait...", Toast.LENGTH_SHORT).show();
+                    }else {
+                        CheckPunchedInOut(punchType, mySchedule);
+                    }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
                 }

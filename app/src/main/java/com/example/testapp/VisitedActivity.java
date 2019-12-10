@@ -3,7 +3,6 @@ package com.example.testapp;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -17,7 +16,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -47,28 +45,24 @@ public class VisitedActivity extends AppCompatActivity {
     private String _myScheduleId, _username, _password;
     String checkBoxString, dateUP, trainingUP, remarkDia, remarkTraining, StartTime, EndTime, NoOfAttendance, Sessions, spinnerAssistance, selectedRadioValueF,
             CommonRemarks, VerificationRemarks, token, selectedRadioValueA, selectedRadioValueB, selectedRadioValueC, selectedRadioValueD, selectedRadioValueE,
-            RemarkQ1, RemarkQ2, RemarkQ3, RemarkQ4, RemarkQ5, RemarkQ6, SegregationRemarks, SpinAsssis;
+            RemarkQ1, RemarkQ2, RemarkQ3, RemarkQ4, RemarkQ5, RemarkQ6, SegregationRemarks;
 
-    private PopupWindow popupWindow;
     private ProgressDialog progressDialog;
     private ActionBar actionBar;
     private AlertDialog.Builder alertDialogBuilder;
     private AlertDialog alertDialog;
 
     EditText txtFollowDate, trainingDate, txtRemarks, txtToken, txtRemarkTraining, txtVerificationRemarks, txtCommonRemarks,
-            txtStartTime, txtEndTime, txtNoOFAttendance, txtSessions, txtSpinnerAssistance, txtSegregationRemarks, txtQ1, txtQ2,
+            txtStartTime, txtEndTime, txtNoOFAttendance, txtSessions, txtSegregationRemarks, txtQ1, txtQ2,
             txtQ3, txtQ4, txtQ5, txtQ6;
     RadioButton a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2;
     CheckBox checkAffiliation, checkTraining, checkReTraining, checkVerification, checkSegregation, checkBForm, checkOfficeWork, checkInChargeDuty,
             checkMarketing, checkPaymentFollowup, checkMedicineCollection, checkSupply, checkSupervisor, checkMeeting, checkTrainingAssistant, checkReVerification;
 
-    Context context;
     Spinner spinner;
 
     final Calendar c = Calendar.getInstance();
-    private int mYear, mMonth, mDay;
 
-    DatePickerDialog.OnDateSetListener dateListener;
     private ArrayAdapter<String> arrayAdapter;
     private ArrayList<String> arrayList;
 
@@ -80,7 +74,6 @@ public class VisitedActivity extends AppCompatActivity {
         actionBar = getSupportActionBar();
         progressDialog = new ProgressDialog(VisitedActivity.this);
         alertDialogBuilder = new AlertDialog.Builder(VisitedActivity.this);
-        alertDialog = alertDialogBuilder.create();
 
         try {
             actionBar.setTitle("Visited Reason");
@@ -372,6 +365,8 @@ public class VisitedActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
+            alertDialog = alertDialogBuilder.create();
+            alertDialog.show();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -487,7 +482,7 @@ public class VisitedActivity extends AppCompatActivity {
                     if (a1.isChecked() || a2.isChecked()) {
                         if (a1.isChecked()) {
                             selectedRadioValueA = "0";
-                        } else if (a1.isChecked()) {
+                        } else if (a2.isChecked()) {
                             selectedRadioValueA = "1";
                         }
                     }
@@ -549,6 +544,7 @@ public class VisitedActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
+            alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }catch (Exception e){
             e.printStackTrace();
@@ -653,6 +649,8 @@ public class VisitedActivity extends AppCompatActivity {
                 dialog.cancel();
             }
         });
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void SaveCommonReason(final String checkBoxString) {
@@ -783,7 +781,7 @@ public class VisitedActivity extends AppCompatActivity {
 
             txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
 
-            /* Show a datepicker when the dateButton is clicked */
+            /* Show a datePicker when the dateButton is clicked */
             txtFollowDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -842,6 +840,7 @@ public class VisitedActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
+            alertDialog = alertDialogBuilder.create();
             alertDialog.show();
             
         }catch (Exception e){
@@ -1028,6 +1027,7 @@ public class VisitedActivity extends AppCompatActivity {
                     dialog.cancel();
                 }
             });
+            alertDialog = alertDialogBuilder.create();
             alertDialog.show();
         }catch (Exception e){
             e.printStackTrace();

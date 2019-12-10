@@ -25,7 +25,6 @@ public class WmsDB {
         preferences = PreferenceManager.getDefaultSharedPreferences(appContext);
     }
 
-
     /**
      * Decodes the Bitmap from 'path' and returns it
      * @param path image path
@@ -44,7 +43,6 @@ public class WmsDB {
         return bitmapFromPath;
     }
 
-
     /**
      * Returns the String path of the last saved image
      * @return string path of the last saved image
@@ -52,7 +50,6 @@ public class WmsDB {
     public String getSavedImagePath() {
         return lastImagePath;
     }
-
 
     /**
      * Saves 'theBitmap' into folder 'theFolder' with the name 'theImageName'
@@ -75,7 +72,6 @@ public class WmsDB {
 
         return false;
     }
-
 
     /**
      * Saves 'theBitmap' into 'fullPath'
@@ -392,7 +388,6 @@ public class WmsDB {
         putListString(key, newList);
     }
 
-
     /**
      * Remove SharedPreferences item with 'key'
      * @param key SharedPreferences key
@@ -410,7 +405,6 @@ public class WmsDB {
         return new File(path).delete();
     }
 
-
     /**
      * Clear SharedPreferences (remove everything)
      */
@@ -425,7 +419,6 @@ public class WmsDB {
     public Map<String, ?> getAll() {
         return preferences.getAll();
     }
-
 
     /**
      * Register SharedPreferences change listener
@@ -446,7 +439,6 @@ public class WmsDB {
 
         preferences.unregisterOnSharedPreferenceChangeListener(listener);
     }
-
 
     /**
      * Check if external storage is writable or not

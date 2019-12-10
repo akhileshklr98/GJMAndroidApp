@@ -25,7 +25,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -216,7 +215,6 @@ public class WorkReport extends AppCompatActivity {
                         progressDialog.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            JSONArray jsonArray;
                             int success = jsonObject.getInt("success");
                             if (success == 1){
                                 Toast.makeText(getApplicationContext(), "You are already updated details", Toast.LENGTH_SHORT).show();
@@ -362,7 +360,6 @@ public class WorkReport extends AppCompatActivity {
                                 try {
                                     JSONObject jsonObject = new JSONObject(response);
                                     int success = jsonObject.getInt("success");
-                                    String message = "Work Report Saved Successfully";
                                     finish();
                                     if (success == 1){
                                         if (status.equals("Visited")){
@@ -518,7 +515,6 @@ public class WorkReport extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 break;
-
 
             case R.id.action_back:
                 try {
