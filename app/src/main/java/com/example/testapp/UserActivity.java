@@ -57,6 +57,8 @@ public class UserActivity extends AppCompatActivity {
     private LocationListener locationListener;
     private ProgressDialog progressDialog;
     private AlertDialog.Builder alertDialog;
+    private SimpleDateFormat df;
+    private Calendar c;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,14 +75,13 @@ public class UserActivity extends AppCompatActivity {
         txtLon = findViewById(R.id.txtLongitude);
         viewLat = findViewById(R.id.txtViewLat);
         viewLon = findViewById(R.id.txtViewLon);
-        Calendar c = Calendar.getInstance();
 
         progressDialog = new ProgressDialog(this);
         alertDialog = new AlertDialog.Builder(UserActivity.this);
-
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c.getTime());
-        txtDate.setText(formattedDate);
+        df = new SimpleDateFormat("dd-MM-yyyy");
+        c = Calendar.getInstance();
+//        String formattedDate = df.format(c.getTime());
+//        txtDate.setText(formattedDate);
 
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -108,6 +109,9 @@ public class UserActivity extends AppCompatActivity {
 
         /* Check Punch in or Out */
         CheckPunchedInOut("","");
+
+        /* Get BackDate from backdatepremission Table */
+        getBackDate();
 
         locationListener = new LocationListener() {
             @Override
@@ -197,6 +201,47 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void getBackDate() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constant.URL_GET_BACK_DATE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            int success = jsonObject.getInt("success");
+                            if (success == 1){
+                                String fromDate = jsonObject.getString("fromDate");
+                                txtDate.setText(fromDate);
+                            }else if (success == 2){
+                                String formattedDate = df.format(c.getTime());
+                                txtDate.setText(formattedDate);
+                            }else {
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+                            }
+                        }catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserName", _userName);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 
     private void CheckPunchedInOut(final String PunchType, final String MySchedule) {
@@ -318,16 +363,19 @@ public class UserActivity extends AppCompatActivity {
                                     Toast.makeText(getApplicationContext(), "Today Schedule Completed!!!" , Toast.LENGTH_SHORT).show();
                                 }
                                 else{
-                                    txtView.setText("Todays Attendance Completed !!");
+                                    txtView.setText("Today Attendance Completed !!");
                                 }
+                            }
+                            if (success == 6){
+                                //no punch in --punch out
+//                                Toast.makeText(getApplicationContext(), "4", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "You Have Pending Yesterday Punch Out !!!" , Toast.LENGTH_SHORT).show();
+
+                                txtView.setText(" You Have Pending Yesterday Punch Out !!!");
                             }else {
                                 String message=jsonObject.getString("message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                             }
-//                            if (success == 0){
-//                                //no connect server
-//                                Toast.makeText(getApplicationContext(), "0", Toast.LENGTH_LONG).show();
-//                            }
                         }catch (JSONException e){
                             e.printStackTrace();
                         }
@@ -348,6 +396,7 @@ public class UserActivity extends AppCompatActivity {
                 params.put("UserName", _userName);
                 params.put("type", PunchType);
                 params.put("MySchedule", MySchedule);
+                params.put("punchDate", txtDate.getText().toString());
                 return params;
             }
         };
