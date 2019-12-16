@@ -128,8 +128,6 @@ public class WorkReport extends AppCompatActivity {
 //                Toast.makeText(getApplicationContext(), "No visit", Toast.LENGTH_LONG).show();
                 try {
                     InitiatePopupWindow(v);
-
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -263,7 +261,8 @@ public class WorkReport extends AppCompatActivity {
                         progressDialog.dismiss();
 //                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Failed To Load Data! Network Error", Toast.LENGTH_SHORT).show();
-                        finish();
+//                        finish();
+                        WorkReport.this.finish();
                     }
                 }){
             @Override

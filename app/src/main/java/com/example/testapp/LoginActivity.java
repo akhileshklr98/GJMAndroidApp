@@ -4,8 +4,10 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -34,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText editUsername, editPassword;
     public Button btnLogIn;
+    private AlertDialog.Builder alertDialogBuilder;
+    private AlertDialog alertDialog;
     private ProgressDialog progressDialog;
     private TelephonyManager tMgr;
     private ActionBar actionBar;
@@ -50,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogIn = findViewById(R.id.loginButton);
 
         progressDialog = new ProgressDialog(this);
+        alertDialogBuilder = new AlertDialog.Builder(this);
 
         try {
             actionBar = getSupportActionBar();
@@ -182,6 +187,25 @@ public class LoginActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    public void onBackPressed() {
+        alertDialogBuilder.setTitle("Exit App");
+        alertDialogBuilder.setMessage("Are you sure want to exit ?");
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+                LoginActivity.super.onDestroy();
+            }
+        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
 }

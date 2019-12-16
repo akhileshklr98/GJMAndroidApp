@@ -80,8 +80,8 @@ public class UserActivity extends AppCompatActivity {
         alertDialog = new AlertDialog.Builder(UserActivity.this);
         df = new SimpleDateFormat("dd-MM-yyyy");
         c = Calendar.getInstance();
-//        String formattedDate = df.format(c.getTime());
-//        txtDate.setText(formattedDate);
+        String formattedDate = df.format(c.getTime());
+        txtDate.setText(formattedDate);
 
 
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
@@ -111,7 +111,7 @@ public class UserActivity extends AppCompatActivity {
         CheckPunchedInOut("","");
 
         /* Get BackDate from backdatepremission Table */
-        getBackDate();
+//        getBackDate();
 
         locationListener = new LocationListener() {
             @Override
@@ -367,11 +367,11 @@ public class UserActivity extends AppCompatActivity {
                                 }
                             }
                             if (success == 6){
-                                //no punch in --punch out
-//                                Toast.makeText(getApplicationContext(), "4", Toast.LENGTH_LONG).show();
+                                //no punch out in yesterday
                                 Toast.makeText(getApplicationContext(), "You Have Pending Yesterday Punch Out !!!" , Toast.LENGTH_SHORT).show();
-
                                 txtView.setText(" You Have Pending Yesterday Punch Out !!!");
+                                /* Get BackDate from backdatepremission Table */
+                                getBackDate();
                             }else {
                                 String message=jsonObject.getString("message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

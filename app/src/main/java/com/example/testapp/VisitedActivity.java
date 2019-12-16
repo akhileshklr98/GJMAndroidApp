@@ -36,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,12 +46,13 @@ public class VisitedActivity extends AppCompatActivity {
     private String _myScheduleId, _username, _password;
     String checkBoxString, dateUP, trainingUP, remarkDia, remarkTraining, StartTime, EndTime, NoOfAttendance, Sessions, spinnerAssistance, selectedRadioValueF,
             CommonRemarks, VerificationRemarks, token, selectedRadioValueA, selectedRadioValueB, selectedRadioValueC, selectedRadioValueD, selectedRadioValueE,
-            RemarkQ1, RemarkQ2, RemarkQ3, RemarkQ4, RemarkQ5, RemarkQ6, SegregationRemarks;
+            RemarkQ1, RemarkQ2, RemarkQ3, RemarkQ4, RemarkQ5, RemarkQ6, SegregationRemarks, formattedDate;
 
     private ProgressDialog progressDialog;
     private ActionBar actionBar;
     private AlertDialog.Builder alertDialogBuilder;
     private AlertDialog alertDialog;
+    private SimpleDateFormat df;
 
     EditText txtFollowDate, trainingDate, txtRemarks, txtToken, txtRemarkTraining, txtVerificationRemarks, txtCommonRemarks,
             txtStartTime, txtEndTime, txtNoOFAttendance, txtSessions, txtSegregationRemarks, txtQ1, txtQ2,
@@ -58,7 +60,6 @@ public class VisitedActivity extends AppCompatActivity {
     RadioButton a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2;
     CheckBox checkAffiliation, checkTraining, checkReTraining, checkVerification, checkSegregation, checkBForm, checkOfficeWork, checkInChargeDuty,
             checkMarketing, checkPaymentFollowup, checkMedicineCollection, checkSupply, checkSupervisor, checkMeeting, checkTrainingAssistant, checkReVerification;
-
     Spinner spinner;
 
     final Calendar c = Calendar.getInstance();
@@ -70,6 +71,11 @@ public class VisitedActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visited);
+
+        df = new SimpleDateFormat("dd-MM-yyyy");
+//        c = Calendar.getInstance();
+        formattedDate = df.format(c.getTime());
+//        txtDate.setText(formattedDate);
 
         actionBar = getSupportActionBar();
         progressDialog = new ProgressDialog(VisitedActivity.this);
@@ -126,7 +132,7 @@ public class VisitedActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 //                Toast.makeText(getApplicationContext(), "Training", Toast.LENGTH_SHORT).show();
                 if (isChecked){
-                    checkBoxString="checkRetraining";
+                    checkBoxString="checkTraining";
                     trainingPopupWindow(buttonView,checkBoxString);
                 }
             }
@@ -363,6 +369,12 @@ public class VisitedActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    if (checkBoxString.equals("checkVerification")){
+                        checkVerification.toggle();
+                    }
+                    if (checkBoxString.equals("checkReVerification")){
+                        checkReVerification.toggle();
+                    }
                 }
             });
             alertDialog = alertDialogBuilder.create();
@@ -392,7 +404,7 @@ public class VisitedActivity extends AppCompatActivity {
                                     String message = "Reason Saved Successfully";
                                     finish();
                                     if (success == 1){
-                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
                                         intent.putExtra("MyScheduleID",_myScheduleId);
                                         intent.putExtra("username",_username);
                                         intent.putExtra("password",_password);
@@ -425,7 +437,6 @@ public class VisitedActivity extends AppCompatActivity {
                     params.put("customerRemarks", VerificationRemarks);
                     params.put("TokenNo", token);
                     params.put("UserName", _username);
-//                    params.put("checkVerification", "10");
                     if(checkBoxString.equals("checkVerification")){
                         params.put("checkVerification", "7");
                     }
@@ -454,27 +465,27 @@ public class VisitedActivity extends AppCompatActivity {
 
             a1 = promptView.findViewById(R.id.chkQ1Y);
             a2 = promptView.findViewById(R.id.chkQ1N);
-            txtQ1 = promptView.findViewById(R.id.txtQ1);
+//            txtQ1 = promptView.findViewById(R.id.txtQ1);
 
             b1 = promptView.findViewById(R.id.chkQ2Y);
             b2 = promptView.findViewById(R.id.chkQ2N);
-            txtQ2 = promptView.findViewById(R.id.txtQ2);
+//            txtQ2 = promptView.findViewById(R.id.txtQ2);
 
             c1 = promptView.findViewById(R.id.chkQ3Y);
             c2 = promptView.findViewById(R.id.chkQ3N);
-            txtQ3 = promptView.findViewById(R.id.txtQ3);
+//            txtQ3 = promptView.findViewById(R.id.txtQ3);
 
-            d1 = promptView.findViewById(R.id.chkQ4Y);
-            d2 = promptView.findViewById(R.id.chkQ4N);
-            txtQ4 = promptView.findViewById(R.id.txtQ4);
-
-            e1 = promptView.findViewById(R.id.chkQ5Y);
-            e2 = promptView.findViewById(R.id.chkQ5N);
-            txtQ5 = promptView.findViewById(R.id.txtQ5);
+//            d1 = promptView.findViewById(R.id.chkQ4Y);
+//            d2 = promptView.findViewById(R.id.chkQ4N);
+//            txtQ4 = promptView.findViewById(R.id.txtQ4);
+//
+//            e1 = promptView.findViewById(R.id.chkQ5Y);
+//            e2 = promptView.findViewById(R.id.chkQ5N);
+//            txtQ5 = promptView.findViewById(R.id.txtQ5);
 
             f1 = promptView.findViewById(R.id.chkQ6Y);
             f2 = promptView.findViewById(R.id.chkQ6N);
-            txtQ6 = promptView.findViewById(R.id.txtQ6);
+//            txtQ6 = promptView.findViewById(R.id.txtQ6);
 
             alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
@@ -503,21 +514,21 @@ public class VisitedActivity extends AppCompatActivity {
                         }
                     }
 
-                    if (d1.isChecked() || d2.isChecked()) {
-                        if (d1.isChecked()) {
-                            selectedRadioValueD = "0";
-                        } else if (d2.isChecked()) {
-                            selectedRadioValueD = "1";
-                        }
-                    }
-
-                    if (e1.isChecked() || e2.isChecked()) {
-                        if (e1.isChecked()) {
-                            selectedRadioValueE = "0";
-                        } else if (e2.isChecked()) {
-                            selectedRadioValueE = "1";
-                        }
-                    }
+//                    if (d1.isChecked() || d2.isChecked()) {
+//                        if (d1.isChecked()) {
+//                            selectedRadioValueD = "0";
+//                        } else if (d2.isChecked()) {
+//                            selectedRadioValueD = "1";
+//                        }
+//                    }
+//
+//                    if (e1.isChecked() || e2.isChecked()) {
+//                        if (e1.isChecked()) {
+//                            selectedRadioValueE = "0";
+//                        } else if (e2.isChecked()) {
+//                            selectedRadioValueE = "1";
+//                        }
+//                    }
 
                     if (f1.isChecked() || f2.isChecked()) {
                         if (f1.isChecked()) {
@@ -529,19 +540,21 @@ public class VisitedActivity extends AppCompatActivity {
 
                     SegregationRemarks = txtSegregationRemarks.getText().toString();
 
-                    RemarkQ1=txtQ1.getText().toString();
-                    RemarkQ2=txtQ2.getText().toString();
-                    RemarkQ3=txtQ3.getText().toString();
-                    RemarkQ4=txtQ4.getText().toString();
-                    RemarkQ5=txtQ5.getText().toString();
-                    RemarkQ6=txtQ6.getText().toString();
+//                    RemarkQ1=txtQ1.getText().toString();
+//                    RemarkQ2=txtQ2.getText().toString();
+//                    RemarkQ3=txtQ3.getText().toString();
+//                    RemarkQ4=txtQ4.getText().toString();
+//                    RemarkQ5=txtQ5.getText().toString();
+//                    RemarkQ6=txtQ6.getText().toString();
 
+                    checkSegregation.setEnabled(false);
                     SaveSegregationReason();
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    checkSegregation.toggle();
                 }
             });
             alertDialog = alertDialogBuilder.create();
@@ -571,7 +584,7 @@ public class VisitedActivity extends AppCompatActivity {
                                     String message = "Reason Saved Successfully";
                                     finish();
                                     if (success == 1){
-                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
                                         intent.putExtra("MyScheduleID",_myScheduleId);
                                         intent.putExtra("username",_username);
                                         intent.putExtra("password",_password);
@@ -604,20 +617,12 @@ public class VisitedActivity extends AppCompatActivity {
                     params.put("customerRemarks", SegregationRemarks);
                     params.put("UserName", _username);
                     params.put("checkSegregation", "4");
-
                     params.put("chkQ1", selectedRadioValueA);
                     params.put("chkQ2", selectedRadioValueB);
                     params.put("chkQ3", selectedRadioValueC);
-                    params.put("chkQ4", selectedRadioValueD);
-                    params.put("chkQ5", selectedRadioValueE);
+//                    params.put("chkQ4", selectedRadioValueD);
+//                    params.put("chkQ5", selectedRadioValueE);
                     params.put("chkQ6", selectedRadioValueF);
-
-                    params.put("txtQ1", RemarkQ1);
-                    params.put("txtQ2", RemarkQ2);
-                    params.put("txtQ3", RemarkQ3);
-                    params.put("txtQ4", RemarkQ4);
-                    params.put("txtQ5", RemarkQ5);
-                    params.put("txtQ6", RemarkQ6);
                     return params;
                 }
             };
@@ -641,12 +646,101 @@ public class VisitedActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 CommonRemarks = txtCommonRemarks.getText().toString();
-                SaveCommonReason(checkBoxString);
+                if (checkBoxString.equals("checkBForm")){
+                    checkBForm.setEnabled(false);
+                    SaveCommonReason(checkBoxString);
+                }else {
+                    if (checkBoxString.equals("checkOfficeWork")){
+                        checkOfficeWork.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMarketing")){
+                        checkMarketing.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkPaymentFollowup")){
+                        checkPaymentFollowup.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMedicineCollection")){
+                        checkMedicineCollection.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkSupply")){
+                        checkSupply.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkSupervisor")){
+                        checkSupervisor.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMeeting")){
+                        checkMeeting.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkTrainingAssistant")){
+                        checkTrainingAssistant.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkInChargeDuty")){
+                        checkInChargeDuty.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                }
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
+                if (checkBoxString.equals("checkBForm")){
+                    checkBForm.toggle();
+                }else {
+                    if (checkBoxString.equals("checkOfficeWork")){
+                        checkOfficeWork.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMarketing")){
+                        checkMarketing.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkPaymentFollowup")){
+                        checkPaymentFollowup.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMedicineCollection")){
+                        checkMedicineCollection.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkSupply")){
+                        checkSupply.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkSupervisor")){
+                        checkSupervisor.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkMeeting")){
+                        checkMeeting.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkTrainingAssistant")){
+                        checkTrainingAssistant.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkInChargeDuty")){
+                        checkInChargeDuty.toggle();
+                        return;
+                    }
+                }
             }
         });
         alertDialog = alertDialogBuilder.create();
@@ -673,7 +767,7 @@ public class VisitedActivity extends AppCompatActivity {
                                     String message = "Reason Saved Successfully";
                                     finish();
                                     if (success == 1){
-                                        Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                        Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
                                         intent.putExtra("MyScheduleID",_myScheduleId);
                                         intent.putExtra("username",_username);
                                         intent.putExtra("password",_password);
@@ -779,48 +873,49 @@ public class VisitedActivity extends AppCompatActivity {
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(this.arrayAdapter);
 
-            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
-
-            /* Show a datePicker when the dateButton is clicked */
-            txtFollowDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
-                            new DatePickerDialog.OnDateSetListener() {
-
-                                @Override
-                                public void onDateSet(DatePicker view, int year,
-                                                      int monthOfYear, int dayOfMonth) {
-                                    txtFollowDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                    dateUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                }
-                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
-                    dpd.show();
-                }
-            });
+//            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
+//
+//            /* Show a datePicker when the dateButton is clicked */
+//            txtFollowDate.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
+//                            new DatePickerDialog.OnDateSetListener() {
+//
+//                                @Override
+//                                public void onDateSet(DatePicker view, int year,
+//                                                      int monthOfYear, int dayOfMonth) {
+//                                    txtFollowDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//                                    dateUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+//                                }
+//                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+//                    dpd.show();
+//                }
+//            });
 
             /* create an Training dialog */
             trainingDate = promptView.findViewById(R.id.trainingdate);
+            trainingDate.setText(formattedDate);
             // Show a datePicker when the dateButton is clicked
-            trainingDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Calendar now = Calendar.getInstance();
-                    final Calendar c = Calendar.getInstance();
-                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
-                            new DatePickerDialog.OnDateSetListener() {
-
-                                @Override
-
-                                public void onDateSet(DatePicker view, int year,
-                                                      int monthOfYear, int dayOfMonth) {
-                                    trainingDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                    trainingUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                }
-                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
-                    dpd.show();
-                }
-            });
+//            trainingDate.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //Calendar now = Calendar.getInstance();
+//                    final Calendar c = Calendar.getInstance();
+//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
+//                            new DatePickerDialog.OnDateSetListener() {
+//
+//                                @Override
+//
+//                                public void onDateSet(DatePicker view, int year,
+//                                                      int monthOfYear, int dayOfMonth) {
+//                                    trainingDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//                                    trainingUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+//                                }
+//                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+//                    dpd.show();
+//                }
+//            });
 
             alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
@@ -832,12 +927,37 @@ public class VisitedActivity extends AppCompatActivity {
                     Sessions = txtSessions.getText().toString();
                     spinnerAssistance = spinner.getSelectedItem().toString();
 
-                    SaveTrainingReason(checkBoxString);
+                    if (NoOfAttendance !=null && !NoOfAttendance.trim().equals("") && trainingUP !=null && StartTime !=null && !StartTime.trim().equals("") && EndTime !=null && !EndTime.trim().equals("") && Sessions !=null && !Sessions.trim().equals("")){
+                        if (checkBoxString.equals("checkTraining")){
+                            checkTraining.setEnabled(false);
+                            SaveTrainingReason(checkBoxString);
+                        }else if (checkBoxString.equals("checkRetraining")){
+                            checkReTraining.setEnabled(false);
+                            SaveTrainingReason(checkBoxString);
+                            return;
+                        }
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Fill All Details", Toast.LENGTH_SHORT).show();
+                        if (checkBoxString.equals("checkTraining")){
+                            checkTraining.toggle();
+                            return;
+                        }
+                        if (checkBoxString.equals("checkRetraining")){
+                            checkReTraining.toggle();
+                            return;
+                        }
+                    }
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    if (checkBoxString.equals("checkTraining")){
+                        checkTraining.toggle();
+                    }else if (checkBoxString.equals("checkRetraining")){
+                        checkReTraining.toggle();
+                        return;
+                    }
                 }
             });
             alertDialog = alertDialogBuilder.create();
@@ -866,7 +986,7 @@ public class VisitedActivity extends AppCompatActivity {
                                 int success = jsonObject.getInt("success");
                                 finish();
                                 if (success == 1){
-                                    Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                    Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
                                     intent.putExtra("MyScheduleID",_myScheduleId);
                                     intent.putExtra("username",_username);
                                     intent.putExtra("password",_password);
@@ -899,14 +1019,12 @@ public class VisitedActivity extends AppCompatActivity {
                 params.put("UserName", _username);
                 params.put("FollowDate",dateUP);
                 params.put("txtTrainingDate",trainingUP);
-
                 params.put("txtStartTime", StartTime);
                 params.put("txtFinishTime", EndTime);
                 params.put("txtSessions", NoOfAttendance);
                 params.put("txtAttendee", Sessions);
                 params.put("txtAssistance", spinnerAssistance);
                 params.put("txtTrainingRemark", remarkTraining);
-
                 if(checkBoxString.equals("checkTraining")){
                     params.put("checkTraining", "2");
                 }
@@ -1019,12 +1137,19 @@ public class VisitedActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     remarkDia = txtRemarks.getText().toString();
                     checkBoxString="checkAffiliation";
-                    SaveReason(checkBoxString);
+                    if (dateUP !=null ){
+                        checkAffiliation.setEnabled(false);
+                        SaveReason(checkBoxString);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Fill All Details", Toast.LENGTH_SHORT).show();
+                        checkAffiliation.toggle();
+                    }
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.cancel();
+                    checkAffiliation.toggle();
                 }
             });
             alertDialog = alertDialogBuilder.create();
@@ -1054,7 +1179,7 @@ public class VisitedActivity extends AppCompatActivity {
                                 String message = "Reason Saved Successfully";
                                 finish();
                                 if (success == 1){
-                                    Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
+                                    Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
                                     intent.putExtra("MyScheduleID",_myScheduleId);
                                     intent.putExtra("username",_username);
                                     intent.putExtra("password",_password);
@@ -1078,6 +1203,11 @@ public class VisitedActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
                     Map<String, String> params = new HashMap<>();
+                    params.put("MyScheduleID", _myScheduleId);
+                    params.put("status", "Visited");
+                    params.put("customerRemarks", remarkDia);
+                    params.put("FollowDate",dateUP);
+                    params.put("UserName", _username);
                     if(checkBoxString.equals("checkAffiliation")){
                         params.put("checkAffiliation", "1");
                     }
@@ -1090,4 +1220,27 @@ public class VisitedActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    public void onBackPressed() {
+        alertDialogBuilder.setTitle("Confirm Submit...");
+        alertDialogBuilder.setMessage("This Schedule will not be further available..");
+        alertDialogBuilder.setCancelable(false).setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(VisitedActivity.this, ScheduleActivity.class);
+                intent.putExtra("MyScheduleID", _myScheduleId);
+                intent.putExtra("username", _username);
+                intent.putExtra("password", _password);
+                startActivity(intent);
+            }
+        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 }
+
