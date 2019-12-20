@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:imeOptions="actionNext"
             android:maxLength="30"
+            android:editable="false"
             android:textColor="#000000" />
 
     </LinearLayout>
@@ -55,12 +56,6 @@
             android:text="@string/txtView_remark"
             android:textColor="#000000"
             android:textSize="21sp" />
-
-<!--        <TextView-->
-<!--            android:layout_width="10sp"-->
-<!--            android:layout_height="20sp"-->
-<!--            android:text="@string/full_colon"-->
-<!--            android:textStyle="bold" />-->
         <EditText
             android:id="@+id/txtVerificationRemarks"
             android:layout_width="match_parent"

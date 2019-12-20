@@ -1,8 +1,8 @@
 package com.example.testapp;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,10 +14,10 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -43,10 +43,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VisitedActivity extends AppCompatActivity {
-    private String _myScheduleId, _username, _password;
+    private String _myScheduleId, _username, _password, _purpose1, _purpose2, _affNo;
     String checkBoxString, dateUP, trainingUP, remarkDia, remarkTraining, StartTime, EndTime, NoOfAttendance, Sessions, spinnerAssistance, selectedRadioValueF,
             CommonRemarks, VerificationRemarks, token, selectedRadioValueA, selectedRadioValueB, selectedRadioValueC, selectedRadioValueD, selectedRadioValueE,
-            RemarkQ1, RemarkQ2, RemarkQ3, RemarkQ4, RemarkQ5, RemarkQ6, SegregationRemarks, formattedDate;
+            selectedRadioValueG, SegregationRemarks, formattedDate;
 
     private ProgressDialog progressDialog;
     private ActionBar actionBar;
@@ -54,13 +54,13 @@ public class VisitedActivity extends AppCompatActivity {
     private AlertDialog alertDialog;
     private SimpleDateFormat df;
 
-    EditText txtFollowDate, trainingDate, txtRemarks, txtToken, txtRemarkTraining, txtVerificationRemarks, txtCommonRemarks,
-            txtStartTime, txtEndTime, txtNoOFAttendance, txtSessions, txtSegregationRemarks, txtQ1, txtQ2,
-            txtQ3, txtQ4, txtQ5, txtQ6;
-    RadioButton a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2;
-    CheckBox checkAffiliation, checkTraining, checkReTraining, checkVerification, checkSegregation, checkBForm, checkOfficeWork, checkInChargeDuty,
-            checkMarketing, checkPaymentFollowup, checkMedicineCollection, checkSupply, checkSupervisor, checkMeeting, checkTrainingAssistant, checkReVerification;
+    EditText txtFollowDate, trainingDate, txtToken, txtRemarkTraining, txtVerificationRemarks, txtCommonRemarks,
+            txtStartTime, txtEndTime, txtNoOFAttendance, txtSessions, txtSegregationRemarks;
+    RadioButton a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2, g1, g2;
+    CheckBox checkTraining, checkReTraining, checkVerification, checkSegregation, checkBForm, checkOfficeWork, checkInChargeDuty, checkQRCodeSupply, checkDistRepMeeting,
+            checkMarketing, checkPaymentFollowup, checkMedicineCollection, checkSupply, checkSupervisor, checkMeeting, checkTrainingAssistant, checkReVerification, checkOthers;
     Spinner spinner;
+//    CheckBox checkAffiliation;
 
     final Calendar c = Calendar.getInstance();
 
@@ -73,9 +73,7 @@ public class VisitedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_visited);
 
         df = new SimpleDateFormat("dd-MM-yyyy");
-//        c = Calendar.getInstance();
         formattedDate = df.format(c.getTime());
-//        txtDate.setText(formattedDate);
 
         actionBar = getSupportActionBar();
         progressDialog = new ProgressDialog(VisitedActivity.this);
@@ -95,12 +93,15 @@ public class VisitedActivity extends AppCompatActivity {
             this._myScheduleId = intent.getStringExtra("MyScheduleID");
             this._username = intent.getStringExtra("username");
             this._password = intent.getStringExtra("password");
+            _purpose1 = intent.getStringExtra("purpose1");
+            _purpose2 = intent.getStringExtra("purpose2");
+            _affNo = intent.getStringExtra("affNo");
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-        checkAffiliation = findViewById( R.id.checkAffiliation );
+//        checkAffiliation = findViewById( R.id.checkAffiliation );
         checkTraining = findViewById(R.id.checkTraining);
         checkReTraining = findViewById(R.id.checkRetraining);
         checkVerification = findViewById(R.id.checkVerification);
@@ -116,21 +117,77 @@ public class VisitedActivity extends AppCompatActivity {
         checkMeeting = findViewById(R.id.checkMeeting);
         checkTrainingAssistant = findViewById(R.id.checkTrainingAssistant);
         checkInChargeDuty = findViewById(R.id.checkInchargeDuty);
+        checkQRCodeSupply = findViewById(R.id.checkQRCodeSupply);
+        checkDistRepMeeting = findViewById(R.id.checkDistRepMeeting);
+        checkOthers = findViewById(R.id.checkOthers);
 
-        checkAffiliation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Affiliation", Toast.LENGTH_SHORT).show();
-                if (isChecked){
-                    initiatePopupWindow(buttonView);
-                }
-            }
-        });
+        if (Integer.parseInt(_purpose1) == 7 || Integer.parseInt(_purpose2) == 7){
+            checkVerification.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 18 || Integer.parseInt(_purpose2) == 18){
+            checkReVerification.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 2 || Integer.parseInt(_purpose2) == 2){
+            checkTraining.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 3 || Integer.parseInt(_purpose2) == 3){
+            checkReTraining.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 4 || Integer.parseInt(_purpose2) == 4){
+            checkSegregation.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 5 || Integer.parseInt(_purpose2) == 5){
+            checkMedicineCollection.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 6 || Integer.parseInt(_purpose2) == 6){
+            checkBForm.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 8 || Integer.parseInt(_purpose2) == 8){
+            checkPaymentFollowup.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 10 || Integer.parseInt(_purpose2) == 10){
+            checkOfficeWork.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 11 || Integer.parseInt(_purpose2) == 11){
+            checkMarketing.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 12 || Integer.parseInt(_purpose2) == 12){
+            checkSupply.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 13 || Integer.parseInt(_purpose2) == 13){
+            checkSupervisor.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 14 || Integer.parseInt(_purpose2) == 14){
+            checkMeeting.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 15 || Integer.parseInt(_purpose2) == 15){
+            checkTrainingAssistant.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 16 || Integer.parseInt(_purpose2) == 16){
+            checkDistRepMeeting.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 17 || Integer.parseInt(_purpose2) == 17){
+            checkQRCodeSupply.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 19 || Integer.parseInt(_purpose2) == 19){
+            checkInChargeDuty.setVisibility(View.VISIBLE);
+        }
+        if (Integer.parseInt(_purpose1) == 9 || Integer.parseInt(_purpose2) == 9){
+            checkOthers.setVisibility(View.VISIBLE);
+        }
+
+//        checkAffiliation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    initiatePopupWindow(buttonView);
+//                }
+//            }
+//        });
 
         checkTraining.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Training", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkTraining";
                     trainingPopupWindow(buttonView,checkBoxString);
@@ -141,7 +198,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkReTraining.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Re Training", Toast.LENGTH_SHORT).show();
                 if(isChecked) {
                     checkBoxString="checkRetraining";
                     trainingPopupWindow(buttonView,checkBoxString);
@@ -152,10 +208,9 @@ public class VisitedActivity extends AppCompatActivity {
         checkVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Verification", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkVerification";
-                    verificationPopupWindow(buttonView, checkBoxString);
+                    verificationPopupWindow(buttonView, checkBoxString, _affNo);
                 }
             }
         });
@@ -163,10 +218,9 @@ public class VisitedActivity extends AppCompatActivity {
         checkReVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Re Verification", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkReVerification";
-                    verificationPopupWindow(buttonView, checkBoxString);
+                    verificationPopupWindow(buttonView, checkBoxString, _affNo);
                 }
             }
         });
@@ -174,7 +228,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkSegregation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Segregation", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     segregationPopupWindow(buttonView);
                 }
@@ -184,7 +237,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkBForm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "B From", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkBForm";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -195,7 +247,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkOfficeWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Office Work", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkOfficeWork";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -206,7 +257,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkMarketing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Marketing", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkMarketing";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -217,7 +267,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkPaymentFollowup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Payment Follow Up", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkPaymentFollowup";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -228,7 +277,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkMedicineCollection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Medicine Collection", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkMedicineCollection";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -239,7 +287,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkSupply.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Supply", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkSupply";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -250,7 +297,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkSupervisor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Supervisor", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkSupervisor";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -261,7 +307,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkMeeting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Meeting", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkMeeting";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -272,7 +317,6 @@ public class VisitedActivity extends AppCompatActivity {
         checkTrainingAssistant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "Training Assistant", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkTrainingAssistant";
                     commonPopupWindow(buttonView,checkBoxString);
@@ -283,9 +327,38 @@ public class VisitedActivity extends AppCompatActivity {
         checkInChargeDuty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                Toast.makeText(getApplicationContext(), "In-Charge Duty", Toast.LENGTH_SHORT).show();
                 if (isChecked){
                     checkBoxString="checkInChargeDuty";
+                    commonPopupWindow(buttonView,checkBoxString);
+                }
+            }
+        });
+
+        checkQRCodeSupply.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    checkBoxString="checkQRCodeSupply";
+                    commonPopupWindow(buttonView,checkBoxString);
+                }
+            }
+        });
+
+        checkDistRepMeeting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    checkBoxString="checkDistRepMeeting";
+                    commonPopupWindow(buttonView,checkBoxString);
+                }
+            }
+        });
+
+        checkOthers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    checkBoxString="checkOthers";
                     commonPopupWindow(buttonView,checkBoxString);
                 }
             }
@@ -343,11 +416,10 @@ public class VisitedActivity extends AppCompatActivity {
             default:
                 break;
         }
-
         return true;
     }
 
-    private void verificationPopupWindow(CompoundButton buttonView, final String checkBoxString) {
+    private void verificationPopupWindow(CompoundButton buttonView, final String checkBoxString, final String AffNo) {
         try {
             LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
             View promptView = layoutInflater.inflate(R.layout.verification_layout, null);
@@ -357,6 +429,7 @@ public class VisitedActivity extends AppCompatActivity {
 
             txtVerificationRemarks = promptView.findViewById(R.id.txtVerificationRemarks);
             txtToken = promptView.findViewById(R.id.txttoken);
+            txtToken.setText(AffNo);
 
             alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
@@ -465,90 +538,94 @@ public class VisitedActivity extends AppCompatActivity {
 
             a1 = promptView.findViewById(R.id.chkQ1Y);
             a2 = promptView.findViewById(R.id.chkQ1N);
-//            txtQ1 = promptView.findViewById(R.id.txtQ1);
 
             b1 = promptView.findViewById(R.id.chkQ2Y);
             b2 = promptView.findViewById(R.id.chkQ2N);
-//            txtQ2 = promptView.findViewById(R.id.txtQ2);
 
             c1 = promptView.findViewById(R.id.chkQ3Y);
             c2 = promptView.findViewById(R.id.chkQ3N);
-//            txtQ3 = promptView.findViewById(R.id.txtQ3);
 
-//            d1 = promptView.findViewById(R.id.chkQ4Y);
-//            d2 = promptView.findViewById(R.id.chkQ4N);
-//            txtQ4 = promptView.findViewById(R.id.txtQ4);
-//
-//            e1 = promptView.findViewById(R.id.chkQ5Y);
-//            e2 = promptView.findViewById(R.id.chkQ5N);
-//            txtQ5 = promptView.findViewById(R.id.txtQ5);
+            d1 = promptView.findViewById(R.id.chkQ4Y);
+            d2 = promptView.findViewById(R.id.chkQ4N);
+
+            e1 = promptView.findViewById(R.id.chkQ5Y);
+            e2 = promptView.findViewById(R.id.chkQ5N);
 
             f1 = promptView.findViewById(R.id.chkQ6Y);
             f2 = promptView.findViewById(R.id.chkQ6N);
-//            txtQ6 = promptView.findViewById(R.id.txtQ6);
+
+            g1 = promptView.findViewById(R.id.chkQ7Y);
+            g2 = promptView.findViewById(R.id.chkQ7N);
 
             alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    if (a1.isChecked() || a2.isChecked()) {
-                        if (a1.isChecked()) {
-                            selectedRadioValueA = "0";
-                        } else if (a2.isChecked()) {
-                            selectedRadioValueA = "1";
+                    if ((a1.isChecked() || a2.isChecked()) && (b1.isChecked() || b2.isChecked()) && (c1.isChecked() || c2.isChecked()) && (f1.isChecked() || f2.isChecked()) &&
+                            (d1.isChecked() || d2.isChecked()) && (e1.isChecked() || e2.isChecked()) && (g1.isChecked() || g2.isChecked())){
+                        if (a1.isChecked() || a2.isChecked()) {
+                            if (a1.isChecked()) {
+                                selectedRadioValueA = "0";
+                            } else if (a2.isChecked()) {
+                                selectedRadioValueA = "1";
+                            }
                         }
-                    }
 
-                    if (b1.isChecked() || b2.isChecked()) {
-                        if (b1.isChecked()) {
-                            selectedRadioValueB = "0";
-                        } else if (b2.isChecked()) {
-                            selectedRadioValueB = "1";
+                        if (b1.isChecked() || b2.isChecked()) {
+                            if (b1.isChecked()) {
+                                selectedRadioValueB = "0";
+                            } else if (b2.isChecked()) {
+                                selectedRadioValueB = "1";
+                            }
                         }
-                    }
 
-                    if (c1.isChecked() || c2.isChecked()) {
-                        if (c1.isChecked()) {
-                            selectedRadioValueC = "0";
-                        } else if (c2.isChecked()) {
-                            selectedRadioValueC = "1";
+                        if (c1.isChecked() || c2.isChecked()) {
+                            if (c1.isChecked()) {
+                                selectedRadioValueC = "0";
+                            } else if (c2.isChecked()) {
+                                selectedRadioValueC = "1";
+                            }
                         }
-                    }
 
-//                    if (d1.isChecked() || d2.isChecked()) {
-//                        if (d1.isChecked()) {
-//                            selectedRadioValueD = "0";
-//                        } else if (d2.isChecked()) {
-//                            selectedRadioValueD = "1";
-//                        }
-//                    }
-//
-//                    if (e1.isChecked() || e2.isChecked()) {
-//                        if (e1.isChecked()) {
-//                            selectedRadioValueE = "0";
-//                        } else if (e2.isChecked()) {
-//                            selectedRadioValueE = "1";
-//                        }
-//                    }
-
-                    if (f1.isChecked() || f2.isChecked()) {
-                        if (f1.isChecked()) {
-                            selectedRadioValueF = "0";
-                        } else if (f2.isChecked()) {
-                            selectedRadioValueF = "1";
+                        if (d1.isChecked() || d2.isChecked()) {
+                            if (d1.isChecked()) {
+                                selectedRadioValueD = "0";
+                            } else if (d2.isChecked()) {
+                                selectedRadioValueD = "1";
+                            }
                         }
+
+                        if (e1.isChecked() || e2.isChecked()) {
+                            if (e1.isChecked()) {
+                                selectedRadioValueE = "0";
+                            } else if (e2.isChecked()) {
+                                selectedRadioValueE = "1";
+                            }
+                        }
+
+                        if (f1.isChecked() || f2.isChecked()) {
+                            if (f1.isChecked()) {
+                                selectedRadioValueF = "0";
+                            } else if (f2.isChecked()) {
+                                selectedRadioValueF = "1";
+                            }
+                        }
+
+                        if (g1.isChecked() || g2.isChecked()) {
+                            if (g1.isChecked()) {
+                                selectedRadioValueG = "0";
+                            } else if (g2.isChecked()) {
+                                selectedRadioValueG = "1";
+                            }
+                        }
+
+                        SegregationRemarks = txtSegregationRemarks.getText().toString();
+
+                        checkSegregation.setEnabled(false);
+                        SaveSegregationReason();
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Fill All Details", Toast.LENGTH_SHORT).show();
+                        checkSegregation.toggle();
                     }
-
-                    SegregationRemarks = txtSegregationRemarks.getText().toString();
-
-//                    RemarkQ1=txtQ1.getText().toString();
-//                    RemarkQ2=txtQ2.getText().toString();
-//                    RemarkQ3=txtQ3.getText().toString();
-//                    RemarkQ4=txtQ4.getText().toString();
-//                    RemarkQ5=txtQ5.getText().toString();
-//                    RemarkQ6=txtQ6.getText().toString();
-
-                    checkSegregation.setEnabled(false);
-                    SaveSegregationReason();
                 }
             }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
@@ -620,9 +697,10 @@ public class VisitedActivity extends AppCompatActivity {
                     params.put("chkQ1", selectedRadioValueA);
                     params.put("chkQ2", selectedRadioValueB);
                     params.put("chkQ3", selectedRadioValueC);
-//                    params.put("chkQ4", selectedRadioValueD);
-//                    params.put("chkQ5", selectedRadioValueE);
+                    params.put("chkQ4", selectedRadioValueD);
+                    params.put("chkQ5", selectedRadioValueE);
                     params.put("chkQ6", selectedRadioValueF);
+                    params.put("chkQ7", selectedRadioValueG);
                     return params;
                 }
             };
@@ -695,6 +773,21 @@ public class VisitedActivity extends AppCompatActivity {
                         SaveCommonReason(checkBoxString);
                         return;
                     }
+                    if (checkBoxString.equals("checkQRCodeSupply")){
+                        checkQRCodeSupply.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkDistRepMeeting")){
+                        checkDistRepMeeting.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
+                    if (checkBoxString.equals("checkOthers")){
+                        checkOthers.setEnabled(false);
+                        SaveCommonReason(checkBoxString);
+                        return;
+                    }
                 }
             }
         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -738,6 +831,18 @@ public class VisitedActivity extends AppCompatActivity {
                     }
                     if (checkBoxString.equals("checkInChargeDuty")){
                         checkInChargeDuty.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkQRCodeSupply")){
+                        checkQRCodeSupply.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkDistRepMeeting")){
+                        checkDistRepMeeting.toggle();
+                        return;
+                    }
+                    if (checkBoxString.equals("checkOthers")){
+                        checkOthers.toggle();
                         return;
                     }
                 }
@@ -796,31 +901,24 @@ public class VisitedActivity extends AppCompatActivity {
                     params.put("status", "Visited");
                     params.put("customerRemarks", CommonRemarks);
                     params.put("UserName", _username);
-
                     if(checkBoxString.equals("checkBForm")){
                         params.put("checkBForm", "6");
                     }
-
                     if(checkBoxString.equals("checkOfficeWork")){
                         params.put("checkOfficeWork", "10");
                     }
-
                     if(checkBoxString.equals("checkMarketing")){
                         params.put("checkMarketing", "11");
                     }
-
                     if(checkBoxString.equals("checkPaymentFollowup")){
                         params.put("checkPaymentFollowup", "8");
                     }
-
                     if(checkBoxString.equals("checkMedicineCollection")){
                         params.put("checkMedicineCollection", "5");
                     }
-
                     if(checkBoxString.equals("checkSupply")){
                         params.put("checkSupply", "12");
                     }
-
                     if(checkBoxString.equals("checkSupervisor")){
                         params.put("checkSupervisor", "13");
                     }
@@ -828,13 +926,20 @@ public class VisitedActivity extends AppCompatActivity {
                     if(checkBoxString.equals("checkMeeting")){
                         params.put("checkMeeting", "14");
                     }
-
                     if(checkBoxString.equals("checkTrainingAssistant")){
                         params.put("checkTrainingAssistant", "15");
                     }
-
                     if(checkBoxString.equals("checkInChargeDuty")){
-                        params.put("checkInchargeDuty", "16");
+                        params.put("checkInchargeDuty", "19");
+                    }
+                    if(checkBoxString.equals("checkQRCodeSupply")){
+                        params.put("checkQRCodeSupply", "17");
+                    }
+                    if(checkBoxString.equals("checkDistRepMeeting")){
+                        params.put("checkDistRepMeeting", "16");
+                    }
+                    if(checkBoxString.equals("checkOthers")){
+                        params.put("checkOthers", "9");
                     }
                     return params;
                 }
@@ -873,42 +978,23 @@ public class VisitedActivity extends AppCompatActivity {
             arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(this.arrayAdapter);
 
-//            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
-//
-//            /* Show a datePicker when the dateButton is clicked */
-//            txtFollowDate.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
-//                            new DatePickerDialog.OnDateSetListener() {
-//
-//                                @Override
-//                                public void onDateSet(DatePicker view, int year,
-//                                                      int monthOfYear, int dayOfMonth) {
-//                                    txtFollowDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-//                                    dateUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-//                                }
-//                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
-//                    dpd.show();
-//                }
-//            });
+            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
+            dateUP = formattedDate;
+            txtFollowDate.setText(dateUP);
 
             /* create an Training dialog */
             trainingDate = promptView.findViewById(R.id.trainingdate);
-            trainingDate.setText(formattedDate);
+            trainingUP = formattedDate;
+            trainingDate.setText(trainingUP);
             // Show a datePicker when the dateButton is clicked
 //            trainingDate.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
 //                    //Calendar now = Calendar.getInstance();
 //                    final Calendar c = Calendar.getInstance();
-//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
-//                            new DatePickerDialog.OnDateSetListener() {
-//
+//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this, new DatePickerDialog.OnDateSetListener() {
 //                                @Override
-//
-//                                public void onDateSet(DatePicker view, int year,
-//                                                      int monthOfYear, int dayOfMonth) {
+//                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                                    trainingDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
 //                                    trainingUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
 //                                }
@@ -916,6 +1002,36 @@ public class VisitedActivity extends AppCompatActivity {
 //                    dpd.show();
 //                }
 //            });
+
+            /* Show a timePicker when the start time edit text is clicked */
+            txtStartTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(VisitedActivity.this,
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    txtStartTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }
+                            }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
+                    timePickerDialog.show();
+                }
+            });
+
+            /* Show a timePicker when the end time edit text is clicked */
+            txtEndTime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TimePickerDialog timePickerDialog = new TimePickerDialog(VisitedActivity.this,
+                            new TimePickerDialog.OnTimeSetListener() {
+                                @Override
+                                public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                    txtEndTime.setText(String.format("%02d:%02d", hourOfDay, minute));
+                                }
+                            }, c.get(Calendar.HOUR_OF_DAY), c.get(Calendar.MINUTE), false);
+                    timePickerDialog.show();
+                }
+            });
 
             alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
                 @Override
@@ -962,7 +1078,6 @@ public class VisitedActivity extends AppCompatActivity {
             });
             alertDialog = alertDialogBuilder.create();
             alertDialog.show();
-            
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -1028,7 +1143,6 @@ public class VisitedActivity extends AppCompatActivity {
                 if(checkBoxString.equals("checkTraining")){
                     params.put("checkTraining", "2");
                 }
-
                 if(checkBoxString.equals("checkRetraining")){
                     params.put("checkRetraining", "3");
                 }
@@ -1105,59 +1219,59 @@ public class VisitedActivity extends AppCompatActivity {
         }
     }
 
-    private void initiatePopupWindow(CompoundButton buttonView) {
-        try {
-            LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
-            View promptView = layoutInflater.inflate(R.layout.affiliation_layout, null);
-
-            alertDialogBuilder.setView(promptView);
-
-            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
-            txtRemarks = promptView.findViewById(R.id.txtRemarks);
-
-            txtFollowDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
-                            new DatePickerDialog.OnDateSetListener() {
-                                @Override
-                                public void onDateSet(DatePicker view, int year,
-                                                      int monthOfYear, int dayOfMonth) {
-                                    txtFollowDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                    dateUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-
-                                }
-                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
-                    dpd.show();
-                }
-            });
-
-            alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    remarkDia = txtRemarks.getText().toString();
-                    checkBoxString="checkAffiliation";
-                    if (dateUP !=null ){
-                        checkAffiliation.setEnabled(false);
-                        SaveReason(checkBoxString);
-                    }else {
-                        Toast.makeText(getApplicationContext(), "Fill All Details", Toast.LENGTH_SHORT).show();
-                        checkAffiliation.toggle();
-                    }
-                }
-            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                    checkAffiliation.toggle();
-                }
-            });
-            alertDialog = alertDialogBuilder.create();
-            alertDialog.show();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
+//    private void initiatePopupWindow(CompoundButton buttonView) {
+//        try {
+//            LayoutInflater layoutInflater = LayoutInflater.from(VisitedActivity.this);
+//            View promptView = layoutInflater.inflate(R.layout.affiliation_layout, null);
+//            alertDialogBuilder.setView(promptView);
+//            alertDialogBuilder.setTitle("Affiliation Details");
+//
+//            txtFollowDate = promptView.findViewById(R.id.txtfollowdate);
+//            txtRemarks = promptView.findViewById(R.id.txtRemarks);
+//
+//            txtFollowDate.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    DatePickerDialog dpd = new DatePickerDialog(VisitedActivity.this,
+//                            new DatePickerDialog.OnDateSetListener() {
+//                                @Override
+//                                public void onDateSet(DatePicker view, int year,
+//                                                      int monthOfYear, int dayOfMonth) {
+//                                    txtFollowDate.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//                                    dateUP = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+//
+//                                }
+//                            }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+//                    dpd.show();
+//                }
+//            });
+//
+//            alertDialogBuilder.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    remarkDia = txtRemarks.getText().toString();
+//                    checkBoxString="checkAffiliation";
+//                    if (dateUP !=null ){
+//                        checkAffiliation.setEnabled(false);
+//                        SaveReason(checkBoxString);
+//                    }else {
+//                        Toast.makeText(getApplicationContext(), "Fill All Details", Toast.LENGTH_SHORT).show();
+//                        checkAffiliation.toggle();
+//                    }
+//                }
+//            }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                    checkAffiliation.toggle();
+//                }
+//            });
+//            alertDialog = alertDialogBuilder.create();
+//            alertDialog.show();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//    }
 
     private void SaveReason(final String checkBoxString) {
         try {

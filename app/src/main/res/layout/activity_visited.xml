@@ -12,17 +12,26 @@
         android:layout_height="wrap_content">
 
         <CheckBox
-            android:id="@+id/checkAffiliation"
+            android:id="@+id/checkVerification"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:text="@string/checkbox_affiliation"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/checkbox_new_verification" />
+
+<!--        <CheckBox-->
+<!--            android:id="@+id/checkAffiliation"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:text="@string/checkbox_affiliation"-->
+<!--            android:textSize="20sp" />-->
 
         <CheckBox
             android:id="@+id/checkTraining"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_training" />
 
         <CheckBox
@@ -30,6 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_retraining" />
 
         <CheckBox
@@ -37,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/txtView_segregation" />
 
         <CheckBox
@@ -44,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_bForm" />
 
         <CheckBox
@@ -51,6 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_office_work" />
 
         <CheckBox
@@ -58,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_marketing" />
 
         <CheckBox
@@ -65,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_payment_followup" />
 
         <CheckBox
@@ -73,21 +88,16 @@
             android:layout_height="48dp"
             android:isScrollContainer="true"
             android:scrollbars="vertical"
+            android:visibility="gone"
             android:text="@string/checkbox_medicine_collection"
             android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/checkVerification"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="20sp"
-            android:text="@string/checkbox_new_verification" />
 
         <CheckBox
             android:id="@+id/checkReVerification"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_re_verification" />
 
         <CheckBox
@@ -95,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_supply" />
 
         <CheckBox
@@ -102,6 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_supervisor_duty" />
 
         <CheckBox
@@ -109,6 +121,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_meeting" />
 
         <CheckBox
@@ -116,6 +129,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_training_assistant" />
 
         <CheckBox
@@ -123,7 +137,32 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:textSize="20sp"
+            android:visibility="gone"
             android:text="@string/checkbox_inCharge" />
+
+        <CheckBox
+            android:id="@+id/checkQRCodeSupply"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/checkbox_qr_code_supply" />
+
+        <CheckBox
+            android:id="@+id/checkDistRepMeeting"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/checkbox_dist_rep_meeting" />
+
+        <CheckBox
+            android:id="@+id/checkOthers"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:text="@string/checkbox_others" />
 
     </LinearLayout>
 </ScrollView>

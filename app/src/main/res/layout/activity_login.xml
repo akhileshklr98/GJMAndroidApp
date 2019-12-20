@@ -20,7 +20,7 @@
         android:shadowDy="5"
         android:shadowRadius="5"
         android:text="@string/lbl_login"
-        android:textColor="#e84118"
+        android:textColor="#f5f6fa"
         android:textSize="30sp"
         android:textStyle="bold" />
 

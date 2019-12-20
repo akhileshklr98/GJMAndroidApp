@@ -218,6 +218,31 @@
             android:textColor="#000000"
             android:minHeight="20sp" />
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1"
+        android:paddingLeft="10dp"
+        android:visibility="gone"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/purpose1"
+            android:layout_weight=".9"
+            android:textColor="#000000"
+            android:minHeight="20sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/purpose2"
+            android:layout_weight=".9"
+            android:textColor="#000000"
+            android:minHeight="20sp" />
+    </LinearLayout>
+
     <Space
         android:layout_width="wrap_content"
         android:layout_height="30sp"

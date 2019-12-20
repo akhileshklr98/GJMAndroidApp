@@ -20,6 +20,6 @@
         android:icon="@android:drawable/ic_lock_power_off"
         android:orderInCategory="101"
         android:title="Logout"
-        app:showAsAction="always" />
+        app:showAsAction="always"/>
 
 </menu>

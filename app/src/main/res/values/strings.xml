@@ -33,6 +33,9 @@
     <string name="txtView_needle">Needle burned properly </string>
     <string name="txtView_waste">Waste sharps disinfected </string>
     <string name="txtView_bmw">BMW properly segregated </string>
+    <string name="txtView_bag_misused">Whether yellow &amp; red bags misused </string>
+    <string name="txtView_waste_treated">Whether laboratory waste pre treated</string>
+    <string name="txtView_needle_destroy">Whether needles destroyed/using tamper proof container</string>
     <string name="txtView_token_no">Token No </string>
     <string name="checkbox_affiliation">Affiliation </string>
     <string name="checkbox_training">Training </string>
@@ -49,6 +52,9 @@
     <string name="checkbox_meeting">Meeting </string>
     <string name="checkbox_training_assistant">Training Assistant </string>
     <string name="checkbox_inCharge">InCharge Duty </string>
+    <string name="checkbox_qr_code_supply">QR Code Supply </string>
+    <string name="checkbox_dist_rep_meeting">Dist Rep Meeting </string>
+    <string name="checkbox_others">Others </string>
     <string name="follow_up">Follow Up </string>
     <string name="purpose">Purpose </string>
     <string name="type">Type </string>

@@ -83,14 +83,12 @@ public class UserActivity extends AppCompatActivity {
         String formattedDate = df.format(c.getTime());
         txtDate.setText(formattedDate);
 
-
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         locationManager.getAllProviders();
 
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("Main Screen");
-
             actionBar.setDisplayShowTitleEnabled(true);
             ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
             actionBar.setBackgroundDrawable(colorDrawable);
@@ -109,9 +107,6 @@ public class UserActivity extends AppCompatActivity {
 
         /* Check Punch in or Out */
         CheckPunchedInOut("","");
-
-        /* Get BackDate from backdatepremission Table */
-//        getBackDate();
 
         locationListener = new LocationListener() {
             @Override
@@ -156,11 +151,11 @@ public class UserActivity extends AppCompatActivity {
                 String punchType = "Punch In";
                 String mySchedule = "";
                 if (locationManager.isProviderEnabled("gps")){
-                    if (txtLat.getText().toString().equals("") && txtLon.getText().toString().equals("") &&
-                            txtLat.getText().toString() == "" && txtLon.getText().toString() == ""){
-                        Toast.makeText(getApplicationContext(), "Please Wait...", Toast.LENGTH_SHORT).show();
-                    }else {
+                    if (!viewLat.getText().toString().equals("") && viewLat.getText().toString() !="" &&
+                            !viewLon.getText().toString().equals("") && viewLon.getText().toString() !=""){
                         CheckPunchedInOut(punchType, mySchedule);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Fetching GPS Coordinates...Please Wait!!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
@@ -189,12 +184,11 @@ public class UserActivity extends AppCompatActivity {
                 String punchType = "Punch Out";
                 String mySchedule = "";
                 if (locationManager.isProviderEnabled("gps")){
-//                    CheckPunchedInOut(punchType, mySchedule);
-                    if (txtLat.getText().toString().equals("") && txtLon.getText().toString().equals("") &&
-                            txtLat.getText().toString() == "" && txtLon.getText().toString() == ""){
-                        Toast.makeText(getApplicationContext(), "Please Wait...", Toast.LENGTH_SHORT).show();
-                    }else {
+                    if (!viewLat.getText().toString().equals("") && viewLat.getText().toString() !="" &&
+                            !viewLon.getText().toString().equals("") && viewLon.getText().toString() !=""){
                         CheckPunchedInOut(punchType, mySchedule);
+                    }else {
+                        Toast.makeText(getApplicationContext(), "Fetching GPS Coordinates...Please Wait!!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
@@ -264,7 +258,6 @@ public class UserActivity extends AppCompatActivity {
                             int success = jsonObject.getInt("success");
                             if (success == 1){
                                 //already punch in
-//                                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_LONG).show();
                                 jsonArray = jsonObject.getJSONArray("CheckPunch");
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject temp = jsonArray.getJSONObject(i);
@@ -297,7 +290,6 @@ public class UserActivity extends AppCompatActivity {
                                 }
                             }
                             if (success == 2){
-//                                Toast.makeText(getApplicationContext(), "2", Toast.LENGTH_LONG).show();
                                 jsonArray = jsonObject.getJSONArray("CheckPunch");
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject temp = jsonArray.getJSONObject(i);
@@ -323,7 +315,6 @@ public class UserActivity extends AppCompatActivity {
                             }
                             if (success == 3){
                                 //no punch in
-//                                Toast.makeText(getApplicationContext(), "3", Toast.LENGTH_LONG).show();
                                 if(MySchedule!=null && MySchedule.equals("MySchedule" )){
                                     Toast.makeText(getApplicationContext(), "You Can't View Without Punch In!!!" , Toast.LENGTH_SHORT).show();
                                 }
@@ -335,7 +326,6 @@ public class UserActivity extends AppCompatActivity {
                                             @Override
                                             public void onClick(DialogInterface dialog, int id) {
                                                 SaveWorkReport(PunchType);
-//                                                Toast.makeText(getApplicationContext(), "Yes", Toast.LENGTH_SHORT).show();
                                             }
                                         }).setNegativeButton("Cancel",
                                                 new DialogInterface.OnClickListener() {
@@ -351,14 +341,12 @@ public class UserActivity extends AppCompatActivity {
                             }
                             if (success == 4){
                                 //no punch in --punch out
-//                                Toast.makeText(getApplicationContext(), "4", Toast.LENGTH_LONG).show();
                                 Toast.makeText(getApplicationContext(), "You Can't Punch Out Without Punch In!!!" , Toast.LENGTH_SHORT).show();
 
                                 txtView.setText("You Can't Punch Out Without Punch In!!!");
                             }
                             if (success == 5){
                                 //complete attendance
-//                                Toast.makeText(getApplicationContext(), "5", Toast.LENGTH_LONG).show();
                                 if(PunchType!=null && !PunchType.equals("")){
                                     Toast.makeText(getApplicationContext(), "Today Schedule Completed!!!" , Toast.LENGTH_SHORT).show();
                                 }
@@ -391,7 +379,6 @@ public class UserActivity extends AppCompatActivity {
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-//                return super.getParams();
                 Map<String, String> params = new HashMap<>();
                 params.put("UserName", _userName);
                 params.put("type", PunchType);
@@ -406,7 +393,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void SaveWorkReport(final String punchType) {
-//        Toast.makeText(getApplicationContext(), punchType, Toast.LENGTH_SHORT).show();
         progressDialog.setMessage("Saving Attendance...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
@@ -466,7 +452,6 @@ public class UserActivity extends AppCompatActivity {
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-//                return super.getParams();
                 Map<String, String> params = new HashMap<>();
                 params.put("GpsLatitude", viewLat.getText().toString());
                 params.put("GpsLongitude", viewLon.getText().toString());
@@ -478,7 +463,6 @@ public class UserActivity extends AppCompatActivity {
                 return params;
             }
         };
-
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 

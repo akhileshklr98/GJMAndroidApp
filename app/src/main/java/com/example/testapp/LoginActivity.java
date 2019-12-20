@@ -60,7 +60,6 @@ public class LoginActivity extends AppCompatActivity {
             actionBar = getSupportActionBar();
             actionBar.hide();
 //            actionBar.setTitle("GJ Multiclaves");
-//
 //            actionBar.setDisplayShowTitleEnabled(true);
 //            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
 //            actionBar.setBackgroundDrawable(colorDrawable);
@@ -96,7 +95,6 @@ public class LoginActivity extends AppCompatActivity {
         if ((receivedUsename != null && !receivedUsename.equals("")) && (receivedPassword != null && !receivedPassword.equals(""))) {
             editUsername.setText(receivedUsename);
             editPassword.setText(receivedPassword);
-//            LoginNow(receivedUsename, receivedPassword);
         }
 
         /* Login Button Click */
@@ -176,7 +174,6 @@ public class LoginActivity extends AppCompatActivity {
                 }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-//                return super.getParams();
                 Map<String,String> params = new HashMap<>();
                 params.put("username", userName);
                 params.put("password", passWord);

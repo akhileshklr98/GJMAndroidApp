@@ -74,7 +74,7 @@
         android:minHeight="20sp"
         android:text="@string/txtView_lat_invisible"
         android:textColor="#000000"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/txtLongitude"
@@ -83,7 +83,7 @@
         android:layout_weight="0.00"
         android:minHeight="20sp"
         android:text="@string/txtView_lon_invisible"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:textColor="#000000" />
 
     <Space

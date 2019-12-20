@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -127,16 +126,13 @@ public class ScheduleActivity extends AppCompatActivity {
                                     mySheduleDetailsPopulate.myScheduleID = temp.getString("myScheduleID");
                                     _adapter.add(mySheduleDetailsPopulate);
                                 }
-//                                _progressDialog.dismiss();
                             }else if (success == 2){
                                 String message = "No Details Found";
 
                                 Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
-//                                _progressDialog.dismiss();
                             }else {
                                 String message = jsonObject.getString("message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-//                                _progressDialog.dismiss();
                             }
                         }catch (Exception e){
                             e.printStackTrace();
