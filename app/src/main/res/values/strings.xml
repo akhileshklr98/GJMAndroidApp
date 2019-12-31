@@ -29,12 +29,12 @@
     <string name="txtView_no">No </string>
     <string name="txtView_dis">Properly used colour coded bags and buckets </string>
     <string name="txtView_bag">Bags Tide properly </string>
-    <string name="txtView_metal">Metal and Sharp properly segregated </string>
+    <string name="txtView_metal">Metal and sharps properly segregated </string>
     <string name="txtView_needle">Needle burned properly </string>
     <string name="txtView_waste">Waste sharps disinfected </string>
     <string name="txtView_bmw">BMW properly segregated </string>
     <string name="txtView_bag_misused">Whether yellow &amp; red bags misused </string>
-    <string name="txtView_waste_treated">Whether laboratory waste pre treated</string>
+    <string name="txtView_waste_treated">Whether laboratory waste pre-treated</string>
     <string name="txtView_needle_destroy">Whether needles destroyed/using tamper proof container</string>
     <string name="txtView_token_no">Token No </string>
     <string name="checkbox_affiliation">Affiliation </string>

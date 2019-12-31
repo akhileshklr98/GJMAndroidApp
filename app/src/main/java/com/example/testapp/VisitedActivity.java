@@ -121,60 +121,60 @@ public class VisitedActivity extends AppCompatActivity {
         checkDistRepMeeting = findViewById(R.id.checkDistRepMeeting);
         checkOthers = findViewById(R.id.checkOthers);
 
-        if (Integer.parseInt(_purpose1) == 7 || Integer.parseInt(_purpose2) == 7){
-            checkVerification.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 18 || Integer.parseInt(_purpose2) == 18){
-            checkReVerification.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 2 || Integer.parseInt(_purpose2) == 2){
-            checkTraining.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 3 || Integer.parseInt(_purpose2) == 3){
-            checkReTraining.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 4 || Integer.parseInt(_purpose2) == 4){
-            checkSegregation.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 5 || Integer.parseInt(_purpose2) == 5){
-            checkMedicineCollection.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 6 || Integer.parseInt(_purpose2) == 6){
-            checkBForm.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 8 || Integer.parseInt(_purpose2) == 8){
-            checkPaymentFollowup.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 10 || Integer.parseInt(_purpose2) == 10){
-            checkOfficeWork.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 11 || Integer.parseInt(_purpose2) == 11){
-            checkMarketing.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 12 || Integer.parseInt(_purpose2) == 12){
-            checkSupply.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 13 || Integer.parseInt(_purpose2) == 13){
-            checkSupervisor.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 14 || Integer.parseInt(_purpose2) == 14){
-            checkMeeting.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 15 || Integer.parseInt(_purpose2) == 15){
-            checkTrainingAssistant.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 16 || Integer.parseInt(_purpose2) == 16){
-            checkDistRepMeeting.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 17 || Integer.parseInt(_purpose2) == 17){
-            checkQRCodeSupply.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 19 || Integer.parseInt(_purpose2) == 19){
-            checkInChargeDuty.setVisibility(View.VISIBLE);
-        }
-        if (Integer.parseInt(_purpose1) == 9 || Integer.parseInt(_purpose2) == 9){
-            checkOthers.setVisibility(View.VISIBLE);
-        }
+//        if (Integer.parseInt(_purpose1) == 7 || Integer.parseInt(_purpose2) == 7){
+//            checkVerification.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 18 || Integer.parseInt(_purpose2) == 18){
+//            checkReVerification.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 2 || Integer.parseInt(_purpose2) == 2){
+//            checkTraining.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 3 || Integer.parseInt(_purpose2) == 3){
+//            checkReTraining.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 4 || Integer.parseInt(_purpose2) == 4){
+//            checkSegregation.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 5 || Integer.parseInt(_purpose2) == 5){
+//            checkMedicineCollection.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 6 || Integer.parseInt(_purpose2) == 6){
+//            checkBForm.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 8 || Integer.parseInt(_purpose2) == 8){
+//            checkPaymentFollowup.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 10 || Integer.parseInt(_purpose2) == 10){
+//            checkOfficeWork.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 11 || Integer.parseInt(_purpose2) == 11){
+//            checkMarketing.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 12 || Integer.parseInt(_purpose2) == 12){
+//            checkSupply.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 13 || Integer.parseInt(_purpose2) == 13){
+//            checkSupervisor.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 14 || Integer.parseInt(_purpose2) == 14){
+//            checkMeeting.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 15 || Integer.parseInt(_purpose2) == 15){
+//            checkTrainingAssistant.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 16 || Integer.parseInt(_purpose2) == 16){
+//            checkDistRepMeeting.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 17 || Integer.parseInt(_purpose2) == 17){
+//            checkQRCodeSupply.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 19 || Integer.parseInt(_purpose2) == 19){
+//            checkInChargeDuty.setVisibility(View.VISIBLE);
+//        }
+//        if (Integer.parseInt(_purpose1) == 9 || Integer.parseInt(_purpose2) == 9){
+//            checkOthers.setVisibility(View.VISIBLE);
+//        }
 
 //        checkAffiliation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override

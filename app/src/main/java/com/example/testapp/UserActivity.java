@@ -142,7 +142,7 @@ public class UserActivity extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
 
         /* Click Punch In Button */
         btnPunchIn.setOnClickListener(new View.OnClickListener() {

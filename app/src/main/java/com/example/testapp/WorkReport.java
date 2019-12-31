@@ -165,7 +165,7 @@ public class WorkReport extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
     }
 
     private void InitiatePopupWindow(View v) {
@@ -201,88 +201,6 @@ public class WorkReport extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-//    private void CheckVisitedStatus(final String Status, final String Report) {
-//        super.onStart();
-//        progressDialog.setMessage("Loading ...");
-//        progressDialog.setIndeterminate(false);
-//        progressDialog.setCanceledOnTouchOutside(false);
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-//
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST,
-//                Constant.URL_EMOB_REPORT,
-//                new Response.Listener<String>() {
-//                    @Override
-//                    public void onResponse(String response) {
-//                        progressDialog.dismiss();
-//                        try {
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            int success = jsonObject.getInt("success");
-//                            if (success == 1){
-//                                Toast.makeText(getApplicationContext(), "You are already updated details", Toast.LENGTH_SHORT).show();
-//                            }else if (success == 2){
-//                                if (Report != "" && Report.equals("Report")){
-//                                    Toast.makeText(getApplicationContext(), "You can't view report without visit", Toast.LENGTH_SHORT).show();
-//                                }else {
-//                                    alertDialog.setTitle("Confirm Status...");
-//                                    alertDialog.setMessage("Are you sure you want to save..?");
-//
-//                                    alertDialog.setCancelable(false).setPositiveButton("Save", new DialogInterface.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(DialogInterface dialog, int id) {
-//                                            if(Status.equals(".")){
-//                                                SaveWorkReport("NotVisited");
-//                                                SaveReason();
-//                                            } else {
-//                                                SaveWorkReport(Status);
-//                                            }
-//                                        }
-//                                    }).setNegativeButton("Cancel",
-//                                            new DialogInterface.OnClickListener() {
-//                                                public void onClick(DialogInterface dialog, int id) {
-//                                                    dialog.cancel();
-//                                                }
-//                                            });
-//
-//                                    alertDialog.show();
-//                                }
-//                            }else if (success == 3){
-//                                SaveWorkReport("Report");
-//                            }else if (success == 4){
-//                                Toast.makeText(getApplicationContext(), "You are already updated visited reason", Toast.LENGTH_SHORT).show();
-//                            }else {
-//                                String message = jsonObject.getString("message");
-//                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
-//                            }
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                },
-//                new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-////                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                        Toast.makeText(getApplicationContext(), "Failed To Load Data! Network Error", Toast.LENGTH_SHORT).show();
-////                        finish();
-//                        WorkReport.this.finish();
-//                    }
-//                }){
-//            @Override
-//            protected Map<String, String> getParams() throws AuthFailureError {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("UserName", _username);
-//                params.put("MyScheduleID", _myscheduleId);
-//                params.put("Status", Status);
-//                params.put("Report", Report);
-//                return params;
-//            }
-//        };
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
-//    }
 
     private void SaveReason() {
         try {
