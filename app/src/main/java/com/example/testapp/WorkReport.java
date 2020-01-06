@@ -165,7 +165,10 @@ public class WorkReport extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+//        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
     }
 
     private void InitiatePopupWindow(View v) {
