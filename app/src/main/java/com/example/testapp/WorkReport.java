@@ -61,7 +61,7 @@ public class WorkReport extends AppCompatActivity {
         setContentView(R.layout.activity_work_report);
 
         progressDialog = new ProgressDialog(WorkReport.this);
-        alertDialog = new AlertDialog.Builder(this);
+//        alertDialog = new AlertDialog.Builder(this);
 
         txtViewLat = findViewById(R.id.tvLatitude);
         txtViewLon = findViewById(R.id.tvLongitude);
@@ -126,9 +126,7 @@ public class WorkReport extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-//                    InitiatePopupWindow(v);
-                    String status = "NotVisited";
-                    CheckVisitedStatus(status, "");
+                    InitiatePopupWindow(v);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -136,6 +134,7 @@ public class WorkReport extends AppCompatActivity {
         });
 
         locationManager = (LocationManager) this.getSystemService(this.LOCATION_SERVICE);
+        locationManager.getAllProviders();
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -165,10 +164,7 @@ public class WorkReport extends AppCompatActivity {
                 return;
             }
         }
-//        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
     }
 
     private void InitiatePopupWindow(View v) {
@@ -176,6 +172,7 @@ public class WorkReport extends AppCompatActivity {
             LayoutInflater layoutInflater = LayoutInflater.from(this);
             View promptView = layoutInflater.inflate(R.layout.pop_up_notvisited, null);
 
+            alertDialog = new AlertDialog.Builder(this);
             alertDialog.setView(promptView);
             alertDialog.setTitle("Not Visited Reason");
 
@@ -186,8 +183,8 @@ public class WorkReport extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     remarks = txtRemarks.getText().toString();
                     if (remarks != null && !remarks.equals("")){
-                        String status = "NotVisited";
-                        CheckVisitedStatus(status, "");
+                        String Status = "NotVisited";
+                        CheckVisitedStatus(Status, "");
                     }else {
                         Toast.makeText(getApplicationContext(), "Please enter not visited reason", Toast.LENGTH_SHORT).show();
                     }
@@ -288,6 +285,11 @@ public class WorkReport extends AppCompatActivity {
                                     if (success == 1){
                                         if (status.equals("Visited")){
                                             Toast.makeText(getApplicationContext(), "You are successfully visited", Toast.LENGTH_SHORT).show();
+                                            Intent intent = new Intent(WorkReport.this, WorkReport.class);
+                                            intent.putExtra("MyScheduleID",_myscheduleId);
+                                            intent.putExtra("username",_username);
+                                            intent.putExtra("password",_password);
+                                            startActivity(intent);
                                         }else{
                                             Toast.makeText(getApplicationContext(), "You are successfully completed", Toast.LENGTH_SHORT).show();
                                         }
@@ -338,7 +340,7 @@ public class WorkReport extends AppCompatActivity {
                 e.printStackTrace();
             }
         }else {
-            Toast.makeText(getApplicationContext(), "Fetching GPS Coordinates...Please Wait!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Fetching Current Location ...Please Wait!!", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -420,6 +422,38 @@ public class WorkReport extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+
+        locationManager.getAllProviders();
+        locationListener = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                txtViewLat.setText(String.valueOf(location.getLatitude()));
+                txtViewLon.setText(String.valueOf(location.getLongitude()));
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+                Log.d("Location","status");
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+                Log.d("Location","enable");
+            }
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(intent);
+            }
+        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                return;
+            }
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
     }
 
     @Override
@@ -431,6 +465,7 @@ public class WorkReport extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        alertDialog = new AlertDialog.Builder(this);
         switch (item.getItemId()) {
             // action with ID action_refresh was selected
             case R.id.refresh:
@@ -443,14 +478,28 @@ public class WorkReport extends AppCompatActivity {
                 break;
 
             case R.id.action_logout:
-                try {
-                    Intent intent = new Intent(WorkReport.this, LoginActivity.class);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                alertDialog.setTitle("Logout");
+                alertDialog.setMessage("Are you sure you want to logout?");
+
+                alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            Intent intent = new Intent(WorkReport.this, LoginActivity.class);
+                            intent.putExtra("username",_username);
+                            intent.putExtra("password",_password);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.create().show();
                 break;
 
             case R.id.action_back:
@@ -482,6 +531,7 @@ public class WorkReport extends AppCompatActivity {
 
     private void CheckVisitedStatus(final String Status, final String Report) {
         super.onStart();
+        alertDialog = new AlertDialog.Builder(this);
         progressDialog.setMessage("Loading ...");
         progressDialog.setIndeterminate(false);
         progressDialog.setCanceledOnTouchOutside(false);
@@ -509,9 +559,11 @@ public class WorkReport extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int id) {
                                             if(Status.equals("NotVisited")){
-                                                SaveWorkReport("NotVisited");
+//                                                String Status = "NotVisited";
+                                                SaveWorkReport(Status);
                                                 SaveReason();
-                                            } else {
+                                            }
+                                            else {
                                                 SaveWorkReport(Status);
                                             }
                                         }
@@ -524,21 +576,25 @@ public class WorkReport extends AppCompatActivity {
                                     alertDialog.create().show();
                                 }
                             }else if (success == 2){
-                                if (Status != null && Status.equals("Visited") && Report == null){
+                                if (Status != null && Status.equals("Visited") && Report == ""){
                                     Toast.makeText(getApplicationContext(), "You have already entered", Toast.LENGTH_SHORT).show();
-                                }else if (Status !=null && Status.equals("NotVisited") && Report == null){
+                                }else if (Status !=null && Status.equals("NotVisited") && Report == ""){
                                     Toast.makeText(getApplicationContext(), "Not allowed, already entered", Toast.LENGTH_SHORT).show();
                                 }else {
                                     SaveWorkReport("Report");
                                 }
                             }else if (success == 3){
-                                Toast.makeText(getApplicationContext(), "You have already updated visited reason", Toast.LENGTH_SHORT).show();
-                                if (Status != null && Status.equals("NotVisited") && Report == null){
+//                                Toast.makeText(getApplicationContext(), "You have already updated visited reason", Toast.LENGTH_SHORT).show();
+                                if (Status != null && Status.equals("NotVisited") && Report == ""){
                                     Toast.makeText(getApplicationContext(), "You have already updated visited reason", Toast.LENGTH_SHORT).show();
+                                }
+                                if (Status != null && Status.equals("Visited") && Report !=null && Report.equals("Report")){
+                                    SaveWorkReport("Report");
                                 }
                             }else if (success == 4){
                                 Toast.makeText(getApplicationContext(), "You have pending report", Toast.LENGTH_SHORT).show();
-                            }else {
+                            }
+                            else {
                                 String message = jsonObject.getString("message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                             }

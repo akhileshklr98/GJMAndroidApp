@@ -147,14 +147,15 @@ public class LoginActivity extends AppCompatActivity {
                             }else if (success == 1){
                                 _loginCrdentials.putString("username", userName);
                                 _loginCrdentials.putString("userpassword", passWord);
-                                try {
-                                    Intent intent = new Intent(LoginActivity.this,UserActivity.class);
-                                    intent.putExtra("username", _loginCrdentials.getString("username"));
-                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
-                                    startActivity(intent);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                                VisitorNot(userName, passWord);
+//                                try {
+//                                    Intent intent = new Intent(LoginActivity.this,UserActivity.class);
+//                                    intent.putExtra("username", _loginCrdentials.getString("username"));
+//                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
+//                                    startActivity(intent);
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                }
                             }else {
                                 String message = jsonObject.getString("Message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -182,6 +183,63 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
+    private void VisitorNot(final String userName, final String passWord) {
+        super.onStart();
+        progressDialog.setMessage("Loading ...");
+        progressDialog.setIndeterminate(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,
+                Constant.URL_EMOB_REPORT,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            progressDialog.dismiss();
+                            JSONObject jsonObject = new JSONObject(response);
+                            int success = jsonObject.getInt("success");
+                            String scheduleID = jsonObject.getString("ScheduleID");
+                            if (success == 4){
+                                Intent intent = new Intent(LoginActivity.this, WorkReport.class);
+                                intent.putExtra("username", userName);
+                                intent.putExtra("password", passWord);
+                                intent.putExtra("MyScheduleID", scheduleID);
+                                startActivity(intent);
+                            }
+                            if (success == 1){
+                                Intent intent = new Intent(LoginActivity.this,UserActivity.class);
+                                intent.putExtra("username", _loginCrdentials.getString("username"));
+                                intent.putExtra("password", _loginCrdentials.getString("userpassword"));
+                                startActivity(intent);
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+//                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Failed To Load Data! Network Error", Toast.LENGTH_SHORT).show();
+//                        finish();
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("UserName", userName);
+                params.put("MyScheduleID", "");
+                return params;
+            }
+        };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
     }

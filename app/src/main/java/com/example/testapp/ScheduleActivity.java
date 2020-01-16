@@ -1,7 +1,9 @@
 package com.example.testapp;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -41,6 +43,7 @@ public class ScheduleActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Intent intent;
     private ProgressDialog _progressDialog;
+    private AlertDialog.Builder alertDialog;
     Context context;
     protected android.content.Context Context;
 
@@ -50,6 +53,8 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedules);
+
+        alertDialog = new AlertDialog.Builder(ScheduleActivity.this);
 
         try {
             actionBar = getSupportActionBar();
@@ -179,15 +184,28 @@ public class ScheduleActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_logout:
-                try {
-                    Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
+                alertDialog.setTitle("Logout");
+                alertDialog.setMessage("Are you sure you want to logout?");
+
+                alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
+                            intent.putExtra("username",_username);
+                            intent.putExtra("password",_password);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                alertDialog.create().show();
                 break;
 
             case R.id.action_back:

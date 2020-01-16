@@ -101,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
+//                locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
                 intent=new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

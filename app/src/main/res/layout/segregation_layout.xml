@@ -75,7 +75,8 @@
                     android:id="@+id/chkQ1Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ1N"
@@ -111,7 +112,8 @@
                     android:id="@+id/chkQ2Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ2N"
@@ -145,7 +147,8 @@
                     android:id="@+id/chkQ3Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02" />
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ3N"
@@ -181,7 +184,8 @@
                     android:id="@+id/chkQ4Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ4N"
@@ -216,7 +220,8 @@
                     android:id="@+id/chkQ5Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ5N"
@@ -252,7 +257,8 @@
                     android:id="@+id/chkQ6Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ6N"
@@ -288,7 +294,8 @@
                     android:id="@+id/chkQ7Y"
                     android:layout_width="40sp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.02"/>
+                    android:layout_weight="0.02"
+                    android:checked="true"/>
 
                 <RadioButton
                     android:id="@+id/chkQ7N"
@@ -348,7 +355,8 @@
                 android:layout_weight="0.92"
                 android:hint="@string/txtView_remark"
                 android:textColor="#000000"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:inputType="text"/>
 
         </LinearLayout>
 

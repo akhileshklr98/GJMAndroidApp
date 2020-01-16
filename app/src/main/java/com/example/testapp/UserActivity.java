@@ -142,10 +142,7 @@ public class UserActivity extends AppCompatActivity {
                 return;
             }
         }
-//        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
-        locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 0, 0, locationListener);
 
         /* Click Punch In Button */
         btnPunchIn.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +155,7 @@ public class UserActivity extends AppCompatActivity {
                             !viewLon.getText().toString().equals("") && viewLon.getText().toString() !=""){
                         CheckPunchedInOut(punchType, mySchedule);
                     }else {
-                        Toast.makeText(getApplicationContext(), "Fetching GPS Coordinates...Please Wait!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Fetching Current Location ... Please Wait!!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
@@ -191,7 +188,7 @@ public class UserActivity extends AppCompatActivity {
                             !viewLon.getText().toString().equals("") && viewLon.getText().toString() !=""){
                         CheckPunchedInOut(punchType, mySchedule);
                     }else {
-                        Toast.makeText(getApplicationContext(), "Fetching GPS Coordinates...Please Wait!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Fetching Current Location ... Please Wait!!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Toast.makeText(getApplicationContext(), "Please Turn On Location And Try Again...!", Toast.LENGTH_SHORT).show();
@@ -336,8 +333,7 @@ public class UserActivity extends AppCompatActivity {
                                                         dialog.cancel();
                                                     }
                                                 });
-
-                                        alertDialog.show();
+                                        alertDialog.create().show();
                                     }
 
                                 }
@@ -363,7 +359,11 @@ public class UserActivity extends AppCompatActivity {
                                 txtView.setText(" You Have Pending Yesterday Punch Out !!!");
                                 /* Get BackDate from backdatepremission Table */
                                 getBackDate();
-                            }else {
+                            }
+                            if (success == 7){
+                                Toast.makeText(getApplicationContext(), "You have pending works...!", Toast.LENGTH_SHORT).show();
+                            }
+                            else {
                                 String message=jsonObject.getString("message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
                             }
@@ -415,6 +415,10 @@ public class UserActivity extends AppCompatActivity {
                                 if (punchType.equals("Punch Out")){
                                     progressDialog.dismiss();
                                     Toast.makeText(getApplicationContext(), "You Are Successfully Punched Out",Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(UserActivity.this, LoginActivity.class);
+                                    intent.putExtra("username",_userName);
+                                    intent.putExtra("password",_password);
+                                    startActivity(intent);
                                 }else {
                                     try {
                                         Intent intent = new Intent(UserActivity.this, ScheduleActivity.class);
