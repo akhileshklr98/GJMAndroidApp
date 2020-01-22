@@ -21,5 +21,8 @@ public class MyScheduleDetailsPopulate {
         this.status = status;
         this.myScheduleID = myscheduleID;
     }
+    public String getHospitalName() {
+        return this.hospotalName;
+    }
 }
 

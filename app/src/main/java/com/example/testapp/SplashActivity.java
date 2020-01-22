@@ -96,12 +96,10 @@ public class SplashActivity extends AppCompatActivity {
 
     private void navigateNextPage() {
         /* Splash Screen And Navigate Next Page */
-//        locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-//                locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
                 intent=new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();

@@ -8,21 +8,25 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class MyScheduleDetailListAdapter extends ArrayAdapter<MyScheduleDetailsPopulate> {
     private Context _context;
     private int _layoutId;
     private ArrayList<MyScheduleDetailsPopulate> feedPopulateList;
+    private ArrayList<MyScheduleDetailsPopulate> arraylist;
 
     public MyScheduleDetailListAdapter(Context context, int layoutID) {
         super(context, layoutID);
         this._context = context;
         this._layoutId = layoutID;
-        feedPopulateList=new ArrayList<>();
+        feedPopulateList = new ArrayList<>();
+        arraylist = new ArrayList<>();
     }
 
     public void add(MyScheduleDetailsPopulate myscheduleDetailsPopulate) {
         feedPopulateList.add(myscheduleDetailsPopulate);
+        arraylist.add(myscheduleDetailsPopulate);
         super.add(myscheduleDetailsPopulate);
     }
 
@@ -84,5 +88,21 @@ public class MyScheduleDetailListAdapter extends ArrayAdapter<MyScheduleDetailsP
 
     private class FeedContainer {
         TextView affnoTxt, hospitalnameTxt, purposeTxt, scheduletypeTxt, statusTxt, myScheduleIDTxt;
+    }
+
+    // Filter Class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        feedPopulateList.clear();
+        if (charText.length() == 0) {
+            feedPopulateList.addAll(arraylist);
+        } else {
+            for (MyScheduleDetailsPopulate wp : arraylist) {
+                if (wp.getHospitalName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                    feedPopulateList.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

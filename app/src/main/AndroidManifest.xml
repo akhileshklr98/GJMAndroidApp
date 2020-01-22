@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -60,9 +62,12 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="com.example.testapp" />
+                <action android:name="android.intent.action.SEARCH"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@layout/searchable" />
         </activity>
         <activity android:name=".WorkReport"
             android:label="@string/app_name"
@@ -73,6 +78,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".VisitedActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.example.testapp"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".AboutActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

@@ -17,7 +17,6 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -61,7 +60,6 @@ public class WorkReport extends AppCompatActivity {
         setContentView(R.layout.activity_work_report);
 
         progressDialog = new ProgressDialog(WorkReport.this);
-//        alertDialog = new AlertDialog.Builder(this);
 
         txtViewLat = findViewById(R.id.tvLatitude);
         txtViewLon = findViewById(R.id.tvLongitude);
@@ -69,8 +67,8 @@ public class WorkReport extends AppCompatActivity {
         try {
             actionBar = getSupportActionBar();
             actionBar.setTitle("Work Report Status");
-            actionBar.setDisplayShowTitleEnabled(true);
-            ColorDrawable colorDrawable=new ColorDrawable(Color.parseColor("#ff06972c"));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#075E54"));
             actionBar.setBackgroundDrawable(colorDrawable);
         }catch (Exception e){
             e.printStackTrace();
@@ -164,7 +162,7 @@ public class WorkReport extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10.0F, locationListener);
     }
 
     private void InitiatePopupWindow(View v) {
@@ -366,29 +364,22 @@ public class WorkReport extends AppCompatActivity {
                                 jsonArray = jsonObject.getJSONArray("WorkReport");
                                 for (int i=0; i<jsonArray.length(); i++){
                                     JSONObject temp = jsonArray.getJSONObject(i);
-                                    if(temp.getString("AffNo")!=null && !temp.getString("AffNo").equals("null"))
-                                    {
+                                    if(temp.getString("AffNo")!=null && !temp.getString("AffNo").equals("null")) {
                                         _affNoView.setText(temp.getString("AffNo"));
                                     }
-                                    if(temp.getString("Hospital")!=null && !temp.getString("Hospital").equals("null"))
-                                    {
+                                    if(temp.getString("Hospital")!=null && !temp.getString("Hospital").equals("null")) {
                                         _hospitalnameView.setText(temp.getString("Hospital"));
                                     }
-
-                                    if(temp.getString("EmployeeID")!=null && !temp.getString("EmployeeID").equals("null"))
-                                    {
+                                    if(temp.getString("EmployeeID")!=null && !temp.getString("EmployeeID").equals("null")) {
                                         _employeeID.setText(temp.getString("EmployeeID"));
                                     }
-                                    if(temp.getString("MyScheduleID")!=null && !temp.getString("MyScheduleID").equals("null"))
-                                    {
+                                    if(temp.getString("MyScheduleID")!=null && !temp.getString("MyScheduleID").equals("null")) {
                                         _myscheduleIDDisplay.setText(temp.getString("MyScheduleID"));
                                     }
-                                    if(temp.getString("Purpose1")!=null && !temp.getString("Purpose1").equals("null"))
-                                    {
+                                    if(temp.getString("Purpose1")!=null && !temp.getString("Purpose1").equals("null")) {
                                         Purpose1.setText(temp.getString("Purpose1"));
                                     }
-                                    if(temp.getString("Purpose2")!=null && !temp.getString("Purpose2").equals("null"))
-                                    {
+                                    if(temp.getString("Purpose2")!=null && !temp.getString("Purpose2").equals("null")) {
                                         Purpose2.setText(temp.getString("Purpose2"));
                                     }else {
                                         Purpose2.setText("0");
@@ -453,80 +444,68 @@ public class WorkReport extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10.0F, locationListener);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.details_page_menu, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         alertDialog = new AlertDialog.Builder(this);
-        switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.refresh:
-                try {
-                    onStart();
-//                    getLocation();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
+        int id = item.getItemId();
 
-            case R.id.action_logout:
-                alertDialog.setTitle("Logout");
-                alertDialog.setMessage("Are you sure you want to logout?");
-
-                alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            Intent intent = new Intent(WorkReport.this, LoginActivity.class);
-                            intent.putExtra("username",_username);
-                            intent.putExtra("password",_password);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                alertDialog.create().show();
-                break;
-
-            case R.id.action_back:
-                try {
-                    Intent intent = new Intent(WorkReport.this, ScheduleActivity.class);
-                    intent.putExtra("ScheduleID",_scheduleId);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.home:
-                try {
-                    finish();
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                break;
+        //menu items
+        if (id == R.id.action_refresh){
+            try {
+                onStart();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        return true;
+        else if (id == R.id.action_logout) {
+            alertDialog.setTitle("Logout");
+            alertDialog.setMessage("Are you sure you want to logout?");
+
+            alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        Intent intent = new Intent(WorkReport.this, LoginActivity.class);
+                        intent.putExtra("username",_password);
+                        intent.putExtra("password",_password);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.create().show();
+            return true;
+        }
+        else if (id == R.id.action_about) {
+            try {
+                Intent intent = new Intent(WorkReport.this, AboutActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        else {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void CheckVisitedStatus(final String Status, final String Report) {
@@ -584,7 +563,6 @@ public class WorkReport extends AppCompatActivity {
                                     SaveWorkReport("Report");
                                 }
                             }else if (success == 3){
-//                                Toast.makeText(getApplicationContext(), "You have already updated visited reason", Toast.LENGTH_SHORT).show();
                                 if (Status != null && Status.equals("NotVisited") && Report == ""){
                                     Toast.makeText(getApplicationContext(), "You have already updated visited reason", Toast.LENGTH_SHORT).show();
                                 }
@@ -609,7 +587,6 @@ public class WorkReport extends AppCompatActivity {
                         progressDialog.dismiss();
 //                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getApplicationContext(), "Failed To Load Data! Network Error", Toast.LENGTH_SHORT).show();
-//                        finish();
                         WorkReport.this.finish();
                     }
                 }){

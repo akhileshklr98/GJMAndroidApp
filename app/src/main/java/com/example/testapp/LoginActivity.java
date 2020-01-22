@@ -59,10 +59,6 @@ public class LoginActivity extends AppCompatActivity {
         try {
             actionBar = getSupportActionBar();
             actionBar.hide();
-//            actionBar.setTitle("GJ Multiclaves");
-//            actionBar.setDisplayShowTitleEnabled(true);
-//            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
-//            actionBar.setBackgroundDrawable(colorDrawable);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -148,14 +144,6 @@ public class LoginActivity extends AppCompatActivity {
                                 _loginCrdentials.putString("username", userName);
                                 _loginCrdentials.putString("userpassword", passWord);
                                 VisitorNot(userName, passWord);
-//                                try {
-//                                    Intent intent = new Intent(LoginActivity.this,UserActivity.class);
-//                                    intent.putExtra("username", _loginCrdentials.getString("username"));
-//                                    intent.putExtra("password", _loginCrdentials.getString("userpassword"));
-//                                    startActivity(intent);
-//                                } catch (Exception e) {
-//                                    e.printStackTrace();
-//                                }
                             }else {
                                 String message = jsonObject.getString("Message");
                                 Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();

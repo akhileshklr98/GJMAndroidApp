@@ -16,6 +16,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -89,8 +91,8 @@ public class UserActivity extends AppCompatActivity {
         try {
             ActionBar actionBar = getSupportActionBar();
             actionBar.setTitle("Main Screen");
-            actionBar.setDisplayShowTitleEnabled(true);
-            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#075E54"));
             actionBar.setBackgroundDrawable(colorDrawable);
         }
         catch (Exception e) {
@@ -115,7 +117,6 @@ public class UserActivity extends AppCompatActivity {
                 longitude = location.getLongitude();
                 viewLat.setText("Latitude : "+latitude);
                 viewLon.setText("Longitude : "+longitude);
-//                Toast.makeText(getApplicationContext(),location.getLatitude()+" "+location.getLongitude(), Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -142,7 +143,7 @@ public class UserActivity extends AppCompatActivity {
                 return;
             }
         }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 10.0F, locationListener);
 
         /* Click Punch In Button */
         btnPunchIn.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +163,6 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         });
-
         /* Click Schedule Button */
         btnShowSchedules.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,7 +176,6 @@ public class UserActivity extends AppCompatActivity {
                 }
             }
         });
-
         /* Click Punch Out Button */
         btnPunchOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -277,7 +276,6 @@ public class UserActivity extends AppCompatActivity {
                                             intent.putExtra("password",_password);
                                             startActivity(intent);
                                         }
-
                                         else{
                                             Toast.makeText(getApplicationContext(), "You Are Already Punched In at " + PunchTime, Toast.LENGTH_SHORT).show();
                                             txtView.setText("You Are Already Punched In at " + PunchTime);
@@ -296,11 +294,9 @@ public class UserActivity extends AppCompatActivity {
                                     if (temp.getString("PunchDate") != null && !temp.getString("PunchDate").equals("null")) {
                                         PunchDate = temp.getString("PunchDate");
                                     }
-
                                     if (temp.getString("PunchTime") != null && !temp.getString("PunchTime").equals("null")) {
                                         PunchTime = temp.getString("PunchTime");
                                     }
-
                                     if (temp.getString("TypeOfPunch") != null && !temp.getString("TypeOfPunch").equals("null")) {
                                         TypeOfPunch = temp.getString("TypeOfPunch");
                                     }
@@ -335,13 +331,11 @@ public class UserActivity extends AppCompatActivity {
                                                 });
                                         alertDialog.create().show();
                                     }
-
                                 }
                             }
                             if (success == 4){
                                 //no punch in --punch out
                                 Toast.makeText(getApplicationContext(), "You Can't Punch Out Without Punch In!!!" , Toast.LENGTH_SHORT).show();
-
                                 txtView.setText("You Can't Punch Out Without Punch In!!!");
                             }
                             if (success == 5){
@@ -377,7 +371,6 @@ public class UserActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.hide();
                         Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-
                     }
                 }){
             @Override
@@ -407,7 +400,6 @@ public class UserActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-//                        progressDialog.dismiss();
                         try{
                             JSONObject jsonObject = new JSONObject(response);
                             int success = jsonObject.getInt("success");
@@ -472,7 +464,59 @@ public class UserActivity extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_user, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //menu items
+        if (id == R.id.action_logout) {
+            alertDialog.setTitle("Logout");
+            alertDialog.setMessage("Are you sure you want to logout?");
+
+            alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        Intent intent = new Intent(UserActivity.this, LoginActivity.class);
+                        intent.putExtra("username",_userName);
+                        intent.putExtra("password",_password);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            alertDialog.create().show();
+            return true;
+        }
+        else if (id == R.id.action_about) {
+            try {
+                Intent intent = new Intent(UserActivity.this, AboutActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        else {
+            onBackPressed();
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

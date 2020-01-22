@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -82,7 +81,7 @@ public class VisitedActivity extends AppCompatActivity {
         try {
             actionBar.setTitle("Visited Reason");
             actionBar.setDisplayShowTitleEnabled(true);
-            ColorDrawable colorDrawable=new ColorDrawable(Color.parseColor("#ff06972c"));
+            ColorDrawable colorDrawable=new ColorDrawable(Color.parseColor("#075E54"));
             actionBar.setBackgroundDrawable(colorDrawable);
         }
         catch (Exception e) {
@@ -129,7 +128,6 @@ public class VisitedActivity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
         checkTraining.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -139,7 +137,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkReTraining.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -149,7 +146,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -159,7 +155,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkReVerification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -169,7 +164,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkSegregation.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,7 +172,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkBForm.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -188,7 +181,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkOfficeWork.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -198,7 +190,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkMarketing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -208,7 +199,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkPaymentFollowup.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -218,7 +208,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkMedicineCollection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -228,7 +217,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkSupply.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -238,7 +226,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkSupervisor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -248,7 +235,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkMeeting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -258,7 +244,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkTrainingAssistant.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -268,7 +253,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkInChargeDuty.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -278,7 +262,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkQRCodeSupply.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -288,7 +271,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkDistRepMeeting.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -298,7 +280,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-
         checkOthers.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -308,60 +289,6 @@ public class VisitedActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-
-            case R.id.refresh:
-                try {
-                    Intent intent = new Intent(VisitedActivity.this, VisitedActivity.class);
-                    intent.putExtra("MyScheduleID",_myScheduleId);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.action_logout:
-                try {
-                    Intent intent = new Intent(VisitedActivity.this, LoginActivity.class);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.action_back:
-                try {
-                    Intent intent = new Intent(VisitedActivity.this, WorkReport.class);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-
-            case R.id.home:
-                try {
-                    finish();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                break;
-        }
-        return true;
     }
 
     private void verificationPopupWindow(CompoundButton buttonView, final String checkBoxString, final String AffNo) {
@@ -514,7 +441,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueA = "1";
                             }
                         }
-
                         if (b1.isChecked() || b2.isChecked()) {
                             if (b1.isChecked()) {
                                 selectedRadioValueB = "0";
@@ -522,7 +448,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueB = "1";
                             }
                         }
-
                         if (c1.isChecked() || c2.isChecked()) {
                             if (c1.isChecked()) {
                                 selectedRadioValueC = "0";
@@ -530,7 +455,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueC = "1";
                             }
                         }
-
                         if (d1.isChecked() || d2.isChecked()) {
                             if (d1.isChecked()) {
                                 selectedRadioValueD = "0";
@@ -538,7 +462,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueD = "1";
                             }
                         }
-
                         if (e1.isChecked() || e2.isChecked()) {
                             if (e1.isChecked()) {
                                 selectedRadioValueE = "0";
@@ -546,7 +469,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueE = "1";
                             }
                         }
-
                         if (f1.isChecked() || f2.isChecked()) {
                             if (f1.isChecked()) {
                                 selectedRadioValueF = "0";
@@ -554,7 +476,6 @@ public class VisitedActivity extends AppCompatActivity {
                                 selectedRadioValueF = "1";
                             }
                         }
-
                         if (g1.isChecked() || g2.isChecked()) {
                             if (g1.isChecked()) {
                                 selectedRadioValueG = "0";
@@ -867,7 +788,6 @@ public class VisitedActivity extends AppCompatActivity {
                     if(checkBoxString.equals("checkSupervisor")){
                         params.put("checkSupervisor", "13");
                     }
-
                     if(checkBoxString.equals("checkMeeting")){
                         params.put("checkMeeting", "14");
                     }

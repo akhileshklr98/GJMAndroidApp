@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +17,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -48,6 +49,7 @@ public class ScheduleActivity extends AppCompatActivity {
     protected android.content.Context Context;
 
     private ListView scheduleDetailsLstView;
+    SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +61,12 @@ public class ScheduleActivity extends AppCompatActivity {
         try {
             actionBar = getSupportActionBar();
             actionBar.setTitle("Scheduled Hospitals");
-            actionBar.setDisplayShowTitleEnabled(true);
-            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#ff06972c"));
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#075E54"));
             actionBar.setBackgroundDrawable(colorDrawable);
         }catch (Exception e){
             e.printStackTrace();
         }
-
         try {
             intent = getIntent();
             _username = intent.getStringExtra("username");
@@ -84,18 +85,15 @@ public class ScheduleActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long id) {
                 String scheduleID="";
                 MyScheduleDetailsPopulate myScheduleDetailsPopulate = (MyScheduleDetailsPopulate) _adapter.getItem(position);
-                if(myScheduleDetailsPopulate!=null && myScheduleDetailsPopulate.myScheduleID!="")
-                {
+                if(myScheduleDetailsPopulate!=null && myScheduleDetailsPopulate.myScheduleID!="") {
                     Intent intent = new Intent(ScheduleActivity.this, WorkReport.class);
                     intent.putExtra("MyScheduleID",myScheduleDetailsPopulate.myScheduleID);
-//                        intent.putExtra("ScheduleID",_scheduleId);
                     intent.putExtra("username",_username);
                     intent.putExtra("password",_password);
                     startActivity(intent);
                 }
             }
         });
-
         /* Load details */
         LoadMyScheduleList();
         this._adapter.notifyDataSetChanged();
@@ -133,7 +131,6 @@ public class ScheduleActivity extends AppCompatActivity {
                                 }
                             }else if (success == 2){
                                 String message = "No Details Found";
-
                                 Toast.makeText(getApplicationContext(), message,Toast.LENGTH_SHORT).show();
                             }else {
                                 String message = jsonObject.getString("message");
@@ -155,7 +152,8 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map <String, String> params = new HashMap<>();
-                params.put("UserName", _username);
+//                params.put("UserName", _username);
+                params.put("UserName", "AKHILESH");
                 return params;
             }
         };
@@ -165,71 +163,77 @@ public class ScheduleActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.details_page_menu, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        searchView = (SearchView) menu.findItem(R.id.txtSearch).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                String text = newText;
+                _adapter.filter(text);
+                return false;
+            }
+        });
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // action with ID action_refresh was selected
-            case R.id.refresh:
-                try {
-                    _adapter.Clear();
-                    LoadMyScheduleList();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                break;
+        int id = item.getItemId();
 
-            case R.id.action_logout:
-                alertDialog.setTitle("Logout");
-                alertDialog.setMessage("Are you sure you want to logout?");
+        //menu items
+        if (id == R.id.action_refresh){
+            try {
+                _adapter.Clear();
+                LoadMyScheduleList();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (id == R.id.action_logout) {
+            alertDialog.setTitle("Logout");
+            alertDialog.setMessage("Are you sure you want to logout?");
 
-                alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        try {
-                            Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
-                            intent.putExtra("username",_username);
-                            intent.putExtra("password",_password);
-                            startActivity(intent);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+            alertDialog.setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    try {
+                        Intent intent = new Intent(ScheduleActivity.this, LoginActivity.class);
+                        intent.putExtra("username",_password);
+                        intent.putExtra("password",_password);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
-                alertDialog.create().show();
-                break;
-
-            case R.id.action_back:
-                try {
-                    Intent intent = new Intent(ScheduleActivity.this, UserActivity.class);
-                    intent.putExtra("username",_username);
-                    intent.putExtra("password",_password);
-                    startActivity(intent);
-                }catch (Exception e){
-                    e.printStackTrace();
                 }
-                break;
-
-            case R.id.home:
-                try {
-                    finish();
-                } catch (Exception e) {
-                    e.printStackTrace();
+            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
                 }
-                break;
-            default:
-                break;
+            });
+            alertDialog.create().show();
+            return true;
+        }
+        else if (id == R.id.action_about) {
+            try {
+                Intent intent = new Intent(ScheduleActivity.this, AboutActivity.class);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        else {
+            onBackPressed();
         }
 
-        return true;
+        return super.onOptionsItemSelected(item);
     }
 }
