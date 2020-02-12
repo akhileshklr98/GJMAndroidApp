@@ -137,9 +137,9 @@ public class UserActivity extends AppCompatActivity {
         };
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//                requestPermissions(new String[]{
-//                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET
-//                }, 101);
+                requestPermissions(new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET
+                }, 101);
                 return;
             }
         }
@@ -350,7 +350,7 @@ public class UserActivity extends AppCompatActivity {
                             if (success == 6){
                                 //no punch out in yesterday
                                 Toast.makeText(getApplicationContext(), "You Have Pending Yesterday Punch Out !!!" , Toast.LENGTH_SHORT).show();
-                                txtView.setText(" You Have Pending Yesterday Punch Out !!!");
+                                txtView.setText("You Have Pending Yesterday Punch Out !!!");
                                 /* Get BackDate from backdatepremission Table */
                                 getBackDate();
                             }
@@ -469,7 +469,7 @@ public class UserActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_user, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -478,7 +478,14 @@ public class UserActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //menu items
-        if (id == R.id.action_logout) {
+        if (id == R.id.action_refresh){
+            try {
+                CheckPunchedInOut("", "");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else if (id == R.id.action_logout) {
             alertDialog.setTitle("Logout");
             alertDialog.setMessage("Are you sure you want to logout?");
 

@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
     private LocationManager locationManager;
     private LocationListener locationListener;
     private ActionBar actionBar;
-    private Intent intent;
+//    private Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onProviderDisabled(String provider) {
-                intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(intent);
             }
         };
@@ -77,6 +77,7 @@ public class SplashActivity extends AppCompatActivity {
         else {
             navigateNextPage();
         }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
     }
 
@@ -100,7 +101,7 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                intent=new Intent(SplashActivity.this, LoginActivity.class);
+                Intent intent=new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

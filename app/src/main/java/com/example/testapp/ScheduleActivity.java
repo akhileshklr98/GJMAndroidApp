@@ -152,8 +152,7 @@ public class ScheduleActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map <String, String> params = new HashMap<>();
-//                params.put("UserName", _username);
-                params.put("UserName", "AKHILESH");
+                params.put("UserName", _username);
                 return params;
             }
         };
